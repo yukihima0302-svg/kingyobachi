@@ -1,58 +1,86 @@
-# 反物・商品のギャラリー
+# 着物のギャラリー
 #
-# 1品につき下のかたまりを1つ足してください。
+# 1点につき下のかたまりを1つ足してください。すべて一点物です。
 #   name    … 品名
-#   kind    … 種別（小紋・紬・銘仙 など）
+#   kind    … 種別（銘仙・小紋・紬・羽織 など）
+#   era     … 時代（大正末〜昭和初期 など。分からなければ空に）
+#   shitake … 身丈（cm）
+#   yuki    … 裄（cm）
+#   jotai   … 状態。ここは正直に書くほど信用されます
 #   note    … 一行の説明
-#   price   … 価格の表示（空にすると「お問い合わせください」になります）
+#   price   … 空にすると「お問い合わせください」になります
 #   image   … assets/img/ に置いた写真のファイル名。空だと文様の柄が代わりに出ます
-#   pattern … 写真がないときに使う柄。yagasuri / kikko / seigaiha / asanoha / ichimatsu
+#   pattern … 写真がないときの柄。yagasuri / kikko / seigaiha / asanoha / ichimatsu
 #   tone    … 柄の色。fuji / asagi / kobai / kogane
 
-- name: "藤色地 矢絣"
+- name: "藤色 矢絣"
   kind: "銘仙"
-  note: "大正末の織り。淡い藤に白の矢羽根が細かく走ります。"
-  price: "88,000円"
+  era: "大正末〜昭和初期"
+  shitake: "148"
+  yuki: "62"
+  jotai: "衿元に薄いシミが二点。着用時は帯で隠れます"
+  note: "淡い藤に白の矢羽根。銘仙らしい、いちばん素直な一枚。"
+  price: "18,000円"
   image: ""
   pattern: "yagasuri"
   tone: "fuji"
 
 - name: "白鼠 亀甲繋ぎ"
   kind: "紬"
-  note: "無地に見えて近づくと亀甲。帯を選ばない一反です。"
-  price: "126,000円"
+  era: "昭和中期"
+  shitake: "153"
+  yuki: "64"
+  jotai: "目立つ傷みなし。裏地に薄い変色"
+  note: "無地に見えて近づくと亀甲。帯を選びません。"
+  price: "24,000円"
   image: ""
   pattern: "kikko"
   tone: "asagi"
 
 - name: "紅梅 青海波"
   kind: "小紋"
-  note: "淡い紅梅地に青海波。お茶席にも、街着にも。"
+  era: "昭和初期"
+  shitake: "145"
+  yuki: "60"
+  jotai: "袖口に擦れ。小柄な方向き"
+  note: "淡い紅梅地に青海波。色が褪せておらず、当時のまま。"
   price: ""
   image: ""
   pattern: "seigaiha"
   tone: "kobai"
 
 - name: "生成 麻の葉"
-  kind: "浴衣地"
-  note: "綿紅梅。夏のふだん着に、仕立てて三週間ほど。"
-  price: "34,000円"
+  kind: "長羽織"
+  era: "昭和初期"
+  shitake: "110"
+  yuki: "61"
+  jotai: "裏地に汗ジミ。表は良好"
+  note: "羽織は寸法が合いやすいので、最初の一枚に。"
+  price: "12,000円"
   image: ""
   pattern: "asanoha"
   tone: "kogane"
 
 - name: "浅葱 市松"
-  kind: "木綿"
-  note: "洗える木綿。日々着るための一反です。"
-  price: "46,000円"
+  kind: "銘仙"
+  era: "昭和初期"
+  shitake: "150"
+  yuki: "63"
+  jotai: "背縫いに一箇所ほつれ。直してあります"
+  note: "市松の切り替えが大胆な一枚。洋服感覚で着られます。"
+  price: "22,000円"
   image: ""
   pattern: "ichimatsu"
   tone: "asagi"
 
 - name: "藤鼠 変わり矢絣"
   kind: "銘仙"
+  era: "大正末"
+  shitake: "146"
+  yuki: "61"
+  jotai: "全体に細かな薄ヤケ。値段に反映しています"
   note: "矢羽根の間隔が不揃いの、珍しい織り方。"
-  price: "お問い合わせください"
+  price: "9,000円"
   image: ""
   pattern: "yagasuri"
   tone: "kogane"
