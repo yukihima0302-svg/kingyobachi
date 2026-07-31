@@ -1,0 +1,58 @@
+# 反物・商品のギャラリー
+#
+# 1品につき下のかたまりを1つ足してください。
+#   name    … 品名
+#   kind    … 種別（小紋・紬・銘仙 など）
+#   note    … 一行の説明
+#   price   … 価格の表示（空にすると「お問い合わせください」になります）
+#   image   … assets/img/ に置いた写真のファイル名。空だと文様の柄が代わりに出ます
+#   pattern … 写真がないときに使う柄。yagasuri / kikko / seigaiha / asanoha / ichimatsu
+#   tone    … 柄の色。fuji / asagi / kobai / kogane
+
+- name: "藤色地 矢絣"
+  kind: "銘仙"
+  note: "大正末の織り。淡い藤に白の矢羽根が細かく走ります。"
+  price: "88,000円"
+  image: ""
+  pattern: "yagasuri"
+  tone: "fuji"
+
+- name: "白鼠 亀甲繋ぎ"
+  kind: "紬"
+  note: "無地に見えて近づくと亀甲。帯を選ばない一反です。"
+  price: "126,000円"
+  image: ""
+  pattern: "kikko"
+  tone: "asagi"
+
+- name: "紅梅 青海波"
+  kind: "小紋"
+  note: "淡い紅梅地に青海波。お茶席にも、街着にも。"
+  price: ""
+  image: ""
+  pattern: "seigaiha"
+  tone: "kobai"
+
+- name: "生成 麻の葉"
+  kind: "浴衣地"
+  note: "綿紅梅。夏のふだん着に、仕立てて三週間ほど。"
+  price: "34,000円"
+  image: ""
+  pattern: "asanoha"
+  tone: "kogane"
+
+- name: "浅葱 市松"
+  kind: "木綿"
+  note: "洗える木綿。日々着るための一反です。"
+  price: "46,000円"
+  image: ""
+  pattern: "ichimatsu"
+  tone: "asagi"
+
+- name: "藤鼠 変わり矢絣"
+  kind: "銘仙"
+  note: "矢羽根の間隔が不揃いの、珍しい織り方。"
+  price: "お問い合わせください"
+  image: ""
+  pattern: "yagasuri"
+  tone: "kogane"

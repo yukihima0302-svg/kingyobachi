@@ -1,0 +1,39 @@
+---
+layout: page
+title: 反物と品もの
+latin: TEXTILES
+permalink: /gallery/
+lead: 巻かれた反物は、広げてみないと分かりません。名前に触れると、ほどけます。実物は店でお確かめください。
+---
+
+<div class="tanmono-dana">
+  {% for t in site.data.gallery %}
+  <button class="tanmono" type="button" aria-expanded="false">
+    {% if t.image != "" %}
+      <img src="{{ '/assets/img/' | append: t.image | relative_url }}" alt="{{ t.name }}">
+    {% else %}
+      <span class="tanmono__gara gara--{{ t.pattern }} iro--{{ t.tone }}" aria-hidden="true"></span>
+    {% endif %}
+    <span class="tanmono__fuda">
+      <span class="tanmono__shu">{{ t.kind }}</span>
+      <span class="tanmono__na">{{ t.name }}</span>
+      <span class="tanmono__setsu">{{ t.note }}</span>
+      <span class="tanmono__ne">{% if t.price != "" %}{{ t.price }}{% else %}お問い合わせください{% endif %}</span>
+    </span>
+  </button>
+  {% endfor %}
+</div>
+
+<div class="kugiri">
+  <span class="kugiri__ji">お求めについて<small>NOTES</small></span>
+</div>
+
+<div class="maegaki">
+  <p>掲載しているものは一点かぎりの反物です。売り切れの際はご容赦ください。お取り置きは電話でも承ります。</p>
+  <p>価格は反物のみのものです。仕立て代は別途、寸法とお仕立ての種類によって変わりますので、店頭でお見積りいたします。</p>
+</div>
+
+<div class="izanai">
+  <p>気になる一反があれば、電話一本でお取り置きします。</p>
+  <a class="fumi" href="tel:{{ site.shop.tel | replace: '-', '' }}">{{ site.shop.tel }}</a>
+</div>

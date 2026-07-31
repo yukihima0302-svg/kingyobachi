@@ -1,0 +1,20 @@
+<footer class="ashimoto">
+  <p class="ashimoto__na">{{ site.title }}</p>
+  <p>
+    {{ site.shop.address }}<br>
+    電話 {{ site.shop.tel }}　／　{{ site.shop.hours }}　／　定休 {{ site.shop.closed }}
+  </p>
+
+  {% if site.social.instagram != "" or site.social.x != "" %}
+  <ul class="ashimoto__sns">
+    {% if site.social.instagram != "" %}
+    <li><a href="https://instagram.com/{{ site.social.instagram }}" rel="me noopener">Instagram</a></li>
+    {% endif %}
+    {% if site.social.x != "" %}
+    <li><a href="https://x.com/{{ site.social.x }}" rel="me noopener">X</a></li>
+    {% endif %}
+  </ul>
+  {% endif %}
+
+  <p class="ashimoto__ki">© {{ site.time | date: "%Y" }} {{ site.latin_name }}</p>
+</footer>

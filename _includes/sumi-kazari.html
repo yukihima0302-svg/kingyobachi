@@ -1,0 +1,10 @@
+{%- comment -%}四隅の階段飾り。昭和初期の図案集にある「段違い」の角罫{%- endcomment -%}
+{% assign kado = "tl,tr,bl,br" | split: "," %}
+{% for k in kado %}
+<svg class="sumi-kazari sumi-kazari--{{ k }}" viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true">
+  <path d="M0 12 L12 12 L12 0"/>
+  <path d="M5 20 L20 20 L20 5"/>
+  <path d="M10 28 L28 28 L28 10"/>
+  <circle cx="6" cy="6" r="1.6" fill="currentColor" stroke="none"/>
+</svg>
+{% endfor %}

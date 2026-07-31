@@ -1,0 +1,29 @@
+---
+layout: page
+title: 読みもの
+latin: JOURNAL
+permalink: /blog/
+lead: 反物のこと、着付けのこと、この町のこと。店の者が書きためています。
+---
+
+<ul class="yomimono">
+  {% for post in paginator.posts %}
+  <li>
+    <a class="hitokoma" href="{{ post.url | relative_url }}">
+      <span class="hitokoma__hi">{{ post.date | date: "%Y.%m.%d" }}</span>
+      <h2 class="hitokoma__dai">{{ post.title }}</h2>
+      <span class="hitokoma__nukigaki">{{ post.excerpt | strip_html | truncate: 90 }}</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+
+<nav class="hera" aria-label="ページ送り">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | relative_url }}">← 新しい記事</a>
+  {% else %}<span>← 新しい記事</span>{% endif %}
+  <span>{{ paginator.page }} / {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | relative_url }}">古い記事 →</a>
+  {% else %}<span>古い記事 →</span>{% endif %}
+</nav>

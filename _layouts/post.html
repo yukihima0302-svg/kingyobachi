@@ -1,0 +1,34 @@
+---
+layout: default
+---
+
+<article>
+  <div class="kashira">
+    <p class="kashira__hi">
+      {{ page.date | date: "%Y . %m . %d" }}
+      {% if page.category %}　—　{{ page.category }}{% endif %}
+    </p>
+    <h1 class="kashira__dai">{{ page.title }}</h1>
+  </div>
+
+  <div class="honbun">
+    {{ content }}
+  </div>
+</article>
+
+<div class="kugiri">
+  <span class="kugiri__ji">つぎの一篇<small>NEXT</small></span>
+</div>
+
+<nav class="hera" aria-label="記事の前後">
+  {% if page.previous %}
+    <a href="{{ page.previous.url | relative_url }}">← {{ page.previous.title | truncate: 22 }}</a>
+  {% else %}<span>← これが最初の一篇です</span>{% endif %}
+  {% if page.next %}
+    <a href="{{ page.next.url | relative_url }}">{{ page.next.title | truncate: 22 }} →</a>
+  {% else %}<span>いちばん新しい一篇です →</span>{% endif %}
+</nav>
+
+<p style="text-align:center;margin-top:2.5rem;">
+  <a class="fumi" href="{{ '/blog/' | relative_url }}">読みもの一覧へ</a>
+</p>

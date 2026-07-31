@@ -1,0 +1,72 @@
+---
+layout: default
+---
+
+<div class="kugiri">
+  <span class="kugiri__ji">ごあいさつ<small>GREETING</small></span>
+</div>
+
+<div class="maegaki">
+  <p>{{ site.shop.established }}の創業から、この町できものを扱ってまいりました。祖父の代からの反物が蔵に眠り、新しい織りが毎月届きます。</p>
+  <p>晴れ着だけの店ではありません。木綿のふだん着、洗える紬、夏の浴衣地。着る機会がないと思っている方にこそ、一度のぞいていただきたい店です。</p>
+</div>
+
+<div class="kugiri">
+  <span class="kugiri__ji">今月の反物<small>THIS MONTH</small></span>
+</div>
+
+<div class="tanmono-dana">
+  {% for t in site.data.gallery limit: 5 %}
+  <button class="tanmono" type="button" aria-expanded="false">
+    {% if t.image != "" %}
+      <img src="{{ '/assets/img/' | append: t.image | relative_url }}" alt="{{ t.name }}">
+    {% else %}
+      <span class="tanmono__gara gara--{{ t.pattern }} iro--{{ t.tone }}" aria-hidden="true"></span>
+    {% endif %}
+    <span class="tanmono__fuda">
+      <span class="tanmono__shu">{{ t.kind }}</span>
+      <span class="tanmono__na">{{ t.name }}</span>
+      <span class="tanmono__setsu">{{ t.note }}</span>
+      <span class="tanmono__ne">{% if t.price != "" %}{{ t.price }}{% else %}お問い合わせください{% endif %}</span>
+    </span>
+  </button>
+  {% endfor %}
+</div>
+
+<p style="text-align:center;margin-top:2.5rem;">
+  <a class="fumi" href="{{ '/gallery/' | relative_url }}">すべての反物を見る</a>
+</p>
+
+<div class="kugiri">
+  <span class="kugiri__ji">読みもの<small>JOURNAL</small></span>
+</div>
+
+<ul class="yomimono">
+  {% for post in site.posts limit: 4 %}
+  <li>
+    <a class="hitokoma" href="{{ post.url | relative_url }}">
+      <span class="hitokoma__hi">{{ post.date | date: "%Y.%m.%d" }}</span>
+      <h3 class="hitokoma__dai">{{ post.title }}</h3>
+      <span class="hitokoma__nukigaki">{{ post.excerpt | strip_html | truncate: 76 }}</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+
+<div class="kugiri">
+  <span class="kugiri__ji">店のこと<small>THE SHOP</small></span>
+</div>
+
+<div class="shirase">
+  <dl class="kojou">
+    <div><dt>所在地</dt><dd>{{ site.shop.address }}</dd></div>
+    <div><dt>電話</dt><dd><a href="tel:{{ site.shop.tel | replace: '-', '' }}">{{ site.shop.tel }}</a></dd></div>
+    <div><dt>営業時間</dt><dd>{{ site.shop.hours }}</dd></div>
+    <div><dt>定休日</dt><dd>{{ site.shop.closed }}</dd></div>
+  </dl>
+
+  <div class="izanai">
+    <p>寸法のご相談も、ただ見るだけのご来店も、どうぞお気軽に。</p>
+    <a class="fumi" href="{{ '/info/' | relative_url }}">地図とアクセス</a>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+<div class="kugiri">
+  <span class="kugiri__ji">
+    {{ page.title }}
+    {% if page.latin %}<small>{{ page.latin }}</small>{% endif %}
+  </span>
+</div>
+
+{% if page.lead %}
+<div class="maegaki">
+  <p>{{ page.lead }}</p>
+</div>
+{% endif %}
+
+{{ content }}
