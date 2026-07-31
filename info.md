@@ -3,13 +3,13 @@ layout: page
 title: 店のこと
 latin: THE SHOP
 permalink: /info/
-lead: 大きな通りから一本入った、蔵造りの店です。看板が小さいので、どうぞ迷わずお電話ください。
+lead: 看板が小さいので、迷ったらお電話ください。すぐ出ます。
 ---
 
 <div class="shirase">
   <dl class="kojou">
     <div><dt>店名</dt><dd>{{ site.title }}</dd></div>
-    <div><dt>創業</dt><dd>{{ site.shop.established }}</dd></div>
+    {% if site.shop.established != "" %}<div><dt>開店</dt><dd>{{ site.shop.established }}</dd></div>{% endif %}
     <div><dt>所在地</dt><dd>{{ site.shop.address }}</dd></div>
     <div><dt>電話</dt><dd><a href="tel:{{ site.shop.tel | replace: '-', '' }}">{{ site.shop.tel }}</a></dd></div>
     <div><dt>営業時間</dt><dd>{{ site.shop.hours }}</dd></div>
@@ -32,9 +32,13 @@ lead: 大きな通りから一本入った、蔵造りの店です。看板が�
 
 <div class="maegaki" markdown="1">
 
-反物の販売のほか、お仕立て、寸法直し、洗い張り、しみ抜きを承ります。他店でお求めのきものでもかまいません。
+扱っているのは、大正から昭和にかけて織られたきものです。すべて一点物で、状態を確かめ、手入れをしてから店に出しています。
 
-たんすに眠っているきものを持ち込んでいただければ、着られる状態かどうか、直すならどのくらいかかるか、その場で見立てます。見立てだけなら無料です。
+**試着** — 気になる一枚は羽織ってみてください。古いきものは寸法が小さいので、数字だけで決めると失敗します。
+
+**寸法直し** — 身丈や裄が足りないとき、縫い代が残っていれば出せることがあります。その場で見て、できるかどうかお答えします。
+
+**買取・引き取り** — たんすに眠っているきものがあれば、お持ちください。値がつくもの、つかないもの、正直にお伝えします。〈※このお店で買取をされていない場合は、この段落ごと消してください〉
 
 </div>
 

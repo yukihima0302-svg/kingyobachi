@@ -1,0 +1,55 @@
+# ===================================================================
+#  ここを書き換えるだけで、サイト全体の表示が変わります
+# ===================================================================
+
+title: "金魚鉢"                 # ← お店の名前
+tagline: "大正・昭和のきものを、いまの人へ"  # ← 一行のキャッチコピー
+latin_name: "KINGYOBACHI"       # ← 見出しに小さく入る欧文表記
+description: "アンティーク・リユースのきもの。大正から昭和のきものを、寸法と状態を明記して一点ずつ。"
+
+# --- 店舗情報 ---------------------------------------------------
+shop:
+  address: "山口県〇〇市〇〇町 0-0-0"
+  tel: "0000-00-0000"
+  hours: "10:00 – 18:00"
+  closed: "水曜日・第3日曜日"
+  parking: "店舗前に3台"
+  access: "JR〇〇駅から徒歩8分／〇〇バス「〇〇前」下車すぐ"
+  map_query: "山口県〇〇市〇〇町"   # Googleマップ検索に使う文字列
+  established: ""   # 開店した年。空にすると表示されません
+
+# --- SNS（使わない項目は行ごと消してください）-------------------
+social:
+  instagram: ""   # 例: sumura_gofuku
+  x: ""
+
+# ===================================================================
+#  ここから下は基本的に触らなくて大丈夫です
+# ===================================================================
+
+url: ""
+baseurl: "/kingyobachi"   # リポジトリ名が kingyobachi のため。名前を変えたらここも直す
+
+permalink: /blog/:year/:month/:day/:title/
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

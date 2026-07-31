@@ -1,9 +1,9 @@
 ---
 layout: page
-title: 反物と品もの
+title: きもの一覧
 latin: TEXTILES
 permalink: /gallery/
-lead: 巻かれた反物は、広げてみないと分かりません。名前に触れると、ほどけます。実物は店でお確かめください。
+lead: すべて一点物です。名前に触れると広がって、寸法と状態が出ます。数字が合いそうなら、店で羽織ってみてください。
 ---
 
 <div class="tanmono-dana">
@@ -15,9 +15,11 @@ lead: 巻かれた反物は、広げてみないと分かりません。名前�
       <span class="tanmono__gara gara--{{ t.pattern }} iro--{{ t.tone }}" aria-hidden="true"></span>
     {% endif %}
     <span class="tanmono__fuda">
-      <span class="tanmono__shu">{{ t.kind }}</span>
+      <span class="tanmono__shu">{{ t.kind }}{% if t.era %}　{{ t.era }}{% endif %}</span>
       <span class="tanmono__na">{{ t.name }}</span>
       <span class="tanmono__setsu">{{ t.note }}</span>
+      <span class="tanmono__sunpo">身丈 {{ t.shitake }}　裄 {{ t.yuki }}</span>
+      <span class="tanmono__jotai">{{ t.jotai }}</span>
       <span class="tanmono__ne">{% if t.price != "" %}{{ t.price }}{% else %}お問い合わせください{% endif %}</span>
     </span>
   </button>
@@ -29,11 +31,11 @@ lead: 巻かれた反物は、広げてみないと分かりません。名前�
 </div>
 
 <div class="maegaki">
-  <p>掲載しているものは一点かぎりの反物です。売り切れの際はご容赦ください。お取り置きは電話でも承ります。</p>
-  <p>価格は反物のみのものです。仕立て代は別途、寸法とお仕立ての種類によって変わりますので、店頭でお見積りいたします。</p>
+  <p>一枚しかないものばかりなので、売れたら終わりです。気になるものはお取り置きしますので、電話でお知らせください。</p>
+  <p>状態の欄は、見つけた傷みをそのまま書いています。書いていない小さな汚れが見つかることもありますので、気になる方は店頭でお確かめください。寸法直しのご相談も承ります。</p>
 </div>
 
 <div class="izanai">
-  <p>気になる一反があれば、電話一本でお取り置きします。</p>
+  <p>気になる一枚があれば、電話一本でお取り置きします。</p>
   <a class="fumi" href="tel:{{ site.shop.tel | replace: '-', '' }}">{{ site.shop.tel }}</a>
 </div>

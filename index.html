@@ -8,11 +8,11 @@ layout: default
 
 <div class="maegaki">
   <p>{{ site.shop.established }}の創業から、この町できものを扱ってまいりました。祖父の代からの反物が蔵に眠り、新しい織りが毎月届きます。</p>
-  <p>晴れ着だけの店ではありません。木綿のふだん着、洗える紬、夏の浴衣地。着る機会がないと思っている方にこそ、一度のぞいていただきたい店です。</p>
+  <p>古いきものは寸法が小さく、傷みもあります。そこを隠すつもりはありません。身丈と裄、状態を一枚ごとに書いていますので、まずそこを見てください。合いそうなものがあれば、店で羽織ってみるのが確実です。</p>
 </div>
 
 <div class="kugiri">
-  <span class="kugiri__ji">今月の反物<small>THIS MONTH</small></span>
+  <span class="kugiri__ji">今週入った一枚<small>NEW ARRIVALS</small></span>
 </div>
 
 <div class="tanmono-dana">
@@ -24,9 +24,11 @@ layout: default
       <span class="tanmono__gara gara--{{ t.pattern }} iro--{{ t.tone }}" aria-hidden="true"></span>
     {% endif %}
     <span class="tanmono__fuda">
-      <span class="tanmono__shu">{{ t.kind }}</span>
+      <span class="tanmono__shu">{{ t.kind }}{% if t.era %}　{{ t.era }}{% endif %}</span>
       <span class="tanmono__na">{{ t.name }}</span>
       <span class="tanmono__setsu">{{ t.note }}</span>
+      <span class="tanmono__sunpo">身丈 {{ t.shitake }}　裄 {{ t.yuki }}</span>
+      <span class="tanmono__jotai">{{ t.jotai }}</span>
       <span class="tanmono__ne">{% if t.price != "" %}{{ t.price }}{% else %}お問い合わせください{% endif %}</span>
     </span>
   </button>
@@ -34,7 +36,7 @@ layout: default
 </div>
 
 <p style="text-align:center;margin-top:2.5rem;">
-  <a class="fumi" href="{{ '/gallery/' | relative_url }}">すべての反物を見る</a>
+  <a class="fumi" href="{{ '/gallery/' | relative_url }}">すべての品を見る</a>
 </p>
 
 <div class="kugiri">
@@ -66,7 +68,7 @@ layout: default
   </dl>
 
   <div class="izanai">
-    <p>寸法のご相談も、ただ見るだけのご来店も、どうぞお気軽に。</p>
+    <p>見るだけのご来店も、寸法だけのご相談も、どうぞ。</p>
     <a class="fumi" href="{{ '/info/' | relative_url }}">地図とアクセス</a>
   </div>
 </div>
