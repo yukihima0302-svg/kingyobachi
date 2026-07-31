@@ -1,24 +1,33 @@
 ---
 ---
 /* ==================================================================
-   すむら呉服店 — 大正モダン／アール・デコ
-   色は「銘仙」の淡い染めから。線は昭和初期の図案集から。
+   金魚鉢 — 涙が溢れそうな夜に、そっと開ける宝箱
+
+   地は夜。線は蒔絵の金。
+   着物は箱の中で、内側から灯る。
+   触れたときだけ、光がこぼれる。
    ================================================================== */
 
 :root {
-  /* 色 —— すべて淡く、墨だけを濃く */
-  --shiro-fuji: #EFE9F2;   /* 白藤：紙の地色 */
-  --usu-fuji:   #E2D9E8;   /* 薄藤：面の切り替え */
-  --nou-ai:     #22283F;   /* 濃藍：文字 */
-  --fuji-murasaki: #8A76AC;/* 藤紫：主となる差し色 */
-  --sabi-asagi: #7FA3A0;   /* 錆浅葱：副の差し色 */
-  --kobai:      #CE93A0;   /* 紅梅：強調 */
-  --ko-gane:    #B08D4C;   /* 古金：罫と飾り */
+  /* 夜 */
+  --yoru:       #131A2C;   /* 夜藍：部屋の闇 */
+  --yoru-fuka:  #0C1120;   /* 藍墨：箱の底 */
+  --hako:       #1B2338;   /* 箱の内張り */
 
-  --sumi-usu: rgba(34, 40, 63, 0.58);
-  --kane-usu: rgba(176, 141, 76, 0.32);
+  /* 灯 */
+  --tomoshibi:  #E9D9B0;   /* 灯：蝋燭の色。文字はこれ */
+  --tomoshibi-usu: rgba(233, 217, 176, 0.56);
 
-  /* 組み */
+  /* 金と貝 */
+  --makie:      #C9A961;   /* 蒔絵金：罫と飾り */
+  --raden:      #A9C6CB;   /* 螺鈿：淡く光る青貝 */
+
+  /* 涙 */
+  --namida:     #C97B84;   /* 紅：ひとつだけの強調 */
+
+  --kin-usu:  rgba(201, 169, 97, 0.30);
+  --kin-koi:  rgba(201, 169, 97, 0.58);
+
   --waku: 1180px;
   --ma: clamp(3.5rem, 8vw, 7rem);
 
@@ -26,74 +35,94 @@
   --mincho-b: "Shippori Mincho B1", "Hiragino Mincho ProN", serif;
   --deco: "Poiret One", "Shippori Mincho", sans-serif;
   --gothic: "Zen Kaku Gothic New", "Hiragino Sans", sans-serif;
+
+  /* 旧名の受け皿（HTMLを触らずに済ませるため） */
+  --sumi-usu: var(--tomoshibi-usu);
+  --kane-usu: var(--kin-usu);
+  --nou-ai: var(--tomoshibi);
+  --fuji-murasaki: var(--raden);
+  --ko-gane: var(--makie);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: var(--yoru-fuka); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
 }
 
 body {
   margin: 0;
-  background-color: var(--shiro-fuji);
-  /* 地紋：ごく薄い矢絣 */
-  background-image:
-    linear-gradient(135deg, rgba(138,118,172,.05) 25%, transparent 25%, transparent 50%, rgba(138,118,172,.05) 50%, rgba(138,118,172,.05) 75%, transparent 75%),
-    linear-gradient(45deg, rgba(138,118,172,.05) 25%, transparent 25%, transparent 50%, rgba(138,118,172,.05) 50%, rgba(138,118,172,.05) 75%, transparent 75%);
-  background-size: 22px 22px;
-  color: var(--nou-ai);
+  color: var(--tomoshibi);
   font-family: var(--mincho);
   font-size: 16.5px;
   line-height: 2.0;
   font-feature-settings: "palt" 1;
   -webkit-font-smoothing: antialiased;
+
+  background-color: var(--yoru);
+  /* 闇にごく薄い矢絣。目を凝らすと見える程度に */
+  background-image:
+    radial-gradient(ellipse 90% 55% at 50% 0%, rgba(201,169,97,.10), transparent 70%),
+    linear-gradient(135deg, rgba(169,198,203,.028) 25%, transparent 25%, transparent 50%, rgba(169,198,203,.028) 50%, rgba(169,198,203,.028) 75%, transparent 75%),
+    linear-gradient(45deg,  rgba(169,198,203,.028) 25%, transparent 25%, transparent 50%, rgba(169,198,203,.028) 50%, rgba(169,198,203,.028) 75%, transparent 75%);
+  background-size: 100% 900px, 22px 22px, 22px 22px;
+  background-repeat: no-repeat, repeat, repeat;
+  background-attachment: fixed, scroll, scroll;
 }
 
 img { max-width: 100%; display: block; }
 
-a { color: var(--nou-ai); text-decoration-color: var(--kane-usu); text-underline-offset: 0.35em; }
-a:hover { color: var(--fuji-murasaki); text-decoration-color: var(--fuji-murasaki); }
+a { color: var(--tomoshibi); text-decoration-color: var(--kin-usu); text-underline-offset: 0.35em; }
+a:hover { color: var(--raden); text-decoration-color: var(--raden); }
 
-:focus-visible {
-  outline: 2px solid var(--fuji-murasaki);
-  outline-offset: 3px;
-}
+:focus-visible { outline: 2px solid var(--raden); outline-offset: 3px; }
 
-.skip {
-  position: absolute; left: -9999px;
-  background: var(--nou-ai); color: var(--shiro-fuji);
-  padding: .6em 1.2em; z-index: 99;
-}
+.skip { position: absolute; left: -9999px; background: var(--tomoshibi); color: var(--yoru); padding: .6em 1.2em; z-index: 99; }
 .skip:focus { left: 1rem; top: 1rem; }
 
-/* ---- 版面：紙を敷き、金の罫で囲う ------------------------------ */
+/* ==================================================================
+   箱 —— 蓋を開ける
+   ページを開いた瞬間に一度だけ、静かに持ち上がる
+   ================================================================== */
 
 .tojiwaku {
   max-width: var(--waku);
   margin: clamp(1rem, 3vw, 2.5rem) auto;
   padding: clamp(1rem, 3vw, 2rem);
   position: relative;
-  background: rgba(255,255,255,.42);
-  border: 1px solid var(--kane-usu);
-  box-shadow: 0 1px 0 rgba(255,255,255,.7) inset;
+  background:
+    linear-gradient(to bottom, rgba(27,35,56,.92), rgba(12,17,32,.92));
+  border: 1px solid var(--kin-koi);
+  box-shadow:
+    0 0 0 1px rgba(12,17,32,.9),
+    0 30px 90px rgba(0,0,0,.55),
+    inset 0 1px 40px rgba(201,169,97,.05);
+  animation: futa-aku 1.5s cubic-bezier(.16,.84,.34,1) both;
 }
+@keyframes futa-aku {
+  from { opacity: 0; transform: translateY(14px) scale(.988); }
+  to   { opacity: 1; transform: none; }
+}
+
 /* 内側の細い二重罫 */
 .tojiwaku::before {
   content: "";
   position: absolute; inset: 8px;
-  border: 1px solid var(--kane-usu);
+  border: 1px solid var(--kin-usu);
   pointer-events: none;
 }
-/* 四隅の階段飾り */
+
+/* 四隅の角金具 */
 .sumi-kazari {
   position: absolute; width: 34px; height: 34px;
-  color: var(--ko-gane); opacity: .75; pointer-events: none;
+  color: var(--makie); opacity: .85; pointer-events: none;
+  filter: drop-shadow(0 0 4px rgba(201,169,97,.35));
 }
 .sumi-kazari--tl { top: 2px;    left: 2px; }
 .sumi-kazari--tr { top: 2px;    right: 2px;  transform: scaleX(-1); }
@@ -102,238 +131,263 @@ a:hover { color: var(--fuji-murasaki); text-decoration-color: var(--fuji-murasak
 
 .naka { padding-inline: clamp(.5rem, 3vw, 2.5rem); }
 
-/* ---- 頭：暖簾のように ------------------------------------------ */
+/* ==================================================================
+   屋号 —— 暗い部屋にひとつ灯る、水の入ったガラス
+   ================================================================== */
 
 .noren {
   text-align: center;
-  padding: clamp(2rem, 6vw, 4rem) 1rem clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(2.5rem, 7vw, 4.5rem) 1rem clamp(1.5rem, 4vw, 2.5rem);
   position: relative;
   overflow: hidden;
 }
-/* 背後の光条 */
+/* 灯り。ごくゆっくり息をする */
 .noren__kousen {
-  position: absolute; inset: -40% -10% auto -10%;
-  height: 200%;
-  background: conic-gradient(from 180deg at 50% 0%,
-    transparent 0deg 6deg, rgba(176,141,76,.09) 6deg 9deg,
-    transparent 9deg 15deg, rgba(176,141,76,.09) 15deg 18deg,
-    transparent 18deg 24deg, rgba(176,141,76,.09) 24deg 27deg,
-    transparent 27deg 33deg, rgba(176,141,76,.09) 33deg 36deg,
-    transparent 36deg 180deg);
+  position: absolute; inset: -30% -20% auto -20%;
+  height: 190%;
+  background:
+    radial-gradient(ellipse 46% 42% at 50% 34%, rgba(233,217,176,.16), transparent 72%),
+    radial-gradient(ellipse 26% 24% at 50% 30%, rgba(169,198,203,.13), transparent 74%);
+  animation: mizu 14s ease-in-out infinite;
   pointer-events: none;
+}
+@keyframes mizu {
+  0%, 100% { opacity: .78; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.045); }
 }
 .noren > * { position: relative; }
 
 .noren__latin {
   font-family: var(--deco);
-  font-size: clamp(.75rem, 2vw, .9rem);
-  letter-spacing: .62em;
-  text-indent: .62em;
-  color: var(--ko-gane);
-  margin: 0 0 1.1rem;
+  font-size: clamp(.7rem, 2vw, .86rem);
+  letter-spacing: .52em; text-indent: .52em;
+  color: var(--makie);
+  margin: 0 0 1.2rem;
 }
 .noren__na {
   font-family: var(--mincho-b);
-  font-weight: 500;
-  font-size: clamp(2.1rem, 7vw, 3.9rem);
-  letter-spacing: .22em;
-  text-indent: .22em;
-  line-height: 1.35;
+  font-weight: 400;
+  font-size: clamp(2.3rem, 8vw, 4.2rem);
+  letter-spacing: .24em; text-indent: .24em;
+  line-height: 1.4;
   margin: 0;
+  text-shadow: 0 0 26px rgba(233,217,176,.35), 0 0 60px rgba(169,198,203,.18);
 }
+.noren__na a { text-decoration: none; color: inherit; }
 .noren__soe {
   font-family: var(--gothic);
-  font-size: clamp(.8rem, 2.2vw, .92rem);
-  letter-spacing: .3em;
-  text-indent: .3em;
-  color: var(--sumi-usu);
-  margin: 1.2rem 0 0;
+  font-size: clamp(.78rem, 2.2vw, .9rem);
+  letter-spacing: .28em; text-indent: .28em;
+  color: var(--tomoshibi-usu);
+  margin: 1.3rem 0 0;
 }
 
-/* ---- 案内（メニュー）------------------------------------------- */
+/* ---- 案内 ------------------------------------------------------ */
 
 .annai {
-  border-block: 1px solid var(--kane-usu);
-  padding: .75rem 1rem;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  border-block: 1px solid var(--kin-usu);
+  padding: .8rem 1rem;
+  display: flex; justify-content: center; flex-wrap: wrap;
   gap: clamp(1rem, 4vw, 2.75rem);
   font-family: var(--gothic);
-  font-size: .84rem;
-  letter-spacing: .2em;
+  font-size: .84rem; letter-spacing: .2em;
 }
-.annai a { text-decoration: none; padding: .25em 0; position: relative; }
+.annai a { text-decoration: none; padding: .25em 0; position: relative; color: var(--tomoshibi-usu); }
+.annai a:hover { color: var(--tomoshibi); }
 .annai a::after {
   content: ""; position: absolute; left: 50%; right: 50%; bottom: 0;
-  height: 1px; background: var(--fuji-murasaki);
-  transition: left .3s ease, right .3s ease;
+  height: 1px; background: var(--makie);
+  transition: left .35s ease, right .35s ease;
 }
 .annai a:hover::after, .annai a[aria-current="page"]::after { left: 0; right: 0; }
-.annai a[aria-current="page"] { color: var(--fuji-murasaki); }
+.annai a[aria-current="page"] { color: var(--makie); }
 
-/* ---- 区切り：扇形の罫 ------------------------------------------ */
+/* ---- 区切り ---------------------------------------------------- */
 
 .kugiri {
   display: flex; align-items: center; justify-content: center;
   gap: 1rem; margin: var(--ma) 0 calc(var(--ma) * .55);
-  color: var(--ko-gane);
 }
 .kugiri::before, .kugiri::after {
   content: ""; flex: 1 1 auto; height: 1px; max-width: 220px;
-  background: linear-gradient(to right, transparent, var(--kane-usu) 30%, var(--kane-usu) 70%, transparent);
+  background: linear-gradient(to right, transparent, var(--kin-usu) 30%, var(--kin-usu) 70%, transparent);
 }
 .kugiri__ji {
   font-family: var(--mincho-b);
   font-size: clamp(1.15rem, 3.4vw, 1.5rem);
   letter-spacing: .34em; text-indent: .34em;
-  color: var(--nou-ai);
-  white-space: nowrap;
+  color: var(--tomoshibi);
+  white-space: nowrap; text-align: center;
 }
 .kugiri__ji small {
   display: block;
   font-family: var(--deco);
   font-size: .5em; letter-spacing: .4em; text-indent: .4em;
-  color: var(--ko-gane); margin-top: .5em;
+  color: var(--makie); margin-top: .55em;
 }
 
 /* ---- 前書き ---------------------------------------------------- */
 
-.maegaki {
-  max-width: 40rem; margin-inline: auto; text-align: center;
-  font-size: 1.02rem;
-}
+.maegaki { max-width: 40rem; margin-inline: auto; text-align: center; font-size: 1.02rem; }
 .maegaki p { margin: 0 0 1.2em; }
 .maegaki p:first-child::first-letter {
   font-family: var(--mincho-b);
   font-size: 2.4em; float: left; line-height: .95;
-  margin: .12em .12em 0 0; color: var(--fuji-murasaki);
+  margin: .12em .12em 0 0; color: var(--makie);
 }
+.maegaki strong { color: var(--raden); font-weight: 400; }
 
 /* ==================================================================
-   反物のギャラリー —— 巻いた反物が、触れるとほどける
+   衣桁 —— 箱の中に並ぶ一枚。触れると、そこだけ灯る
    ================================================================== */
 
 .tanmono-dana {
-  display: flex;
-  gap: 6px;
-  height: clamp(320px, 52vw, 460px);
-  border: 1px solid var(--kane-usu);
+  display: flex; gap: 6px;
+  height: clamp(360px, 56vw, 520px);
+  border: 1px solid var(--kin-usu);
   padding: 6px;
-  background: rgba(255,255,255,.5);
+  background: var(--yoru-fuka);
+  box-shadow: inset 0 4px 24px rgba(0,0,0,.5);
 }
 
 .tanmono {
   position: relative;
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: hidden;
+  flex: 1 1 0; min-width: 0; overflow: hidden;
   border: 0; padding: 0;
-  background: var(--usu-fuji);
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition: flex-grow .55s cubic-bezier(.22,.61,.36,1);
-  font: inherit;
+  background: var(--hako);
+  color: inherit; text-align: left; cursor: pointer; font: inherit;
+  transition: flex-grow .6s cubic-bezier(.22,.61,.36,1), box-shadow .6s ease;
 }
-.tanmono:hover, .tanmono:focus-visible, .tanmono[aria-expanded="true"] { flex-grow: 4.2; }
+.tanmono:hover, .tanmono:focus-visible, .tanmono[aria-expanded="true"] {
+  flex-grow: 4.2;
+  /* 光がこぼれる */
+  box-shadow: 0 0 34px rgba(233,217,176,.22), inset 0 0 60px rgba(233,217,176,.10);
+}
 
-/* 巻かれている感じの陰影 */
+/* 閉じているあいだは沈んでいる。開くと色が戻る */
 .tanmono__gara {
   position: absolute; inset: 0;
   background-size: 26px 26px;
+  filter: brightness(.5) saturate(.65);
+  transition: filter .6s ease;
 }
+.tanmono:hover .tanmono__gara, .tanmono:focus-visible .tanmono__gara,
+.tanmono[aria-expanded="true"] .tanmono__gara { filter: brightness(1) saturate(1); }
 .tanmono__gara::after {
   content: ""; position: absolute; inset: 0;
   background: linear-gradient(to right,
-    rgba(34,40,63,.20) 0%, rgba(255,255,255,.16) 18%,
-    rgba(34,40,63,.06) 55%, rgba(34,40,63,.16) 100%);
+    rgba(12,17,32,.55) 0%, rgba(233,217,176,.06) 20%,
+    rgba(12,17,32,.20) 60%, rgba(12,17,32,.45) 100%);
 }
-.tanmono img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tanmono img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.55) saturate(.7); transition: filter .6s ease;
+}
+.tanmono:hover img, .tanmono:focus-visible img,
+.tanmono[aria-expanded="true"] img { filter: none; }
 
-/* 縦書きの品名。ほどけると横書きの札に変わる */
 .tanmono__fuda {
   position: absolute; inset: auto 0 0 0;
-  padding: .9rem .8rem;
-  background: linear-gradient(to top, rgba(239,233,242,.97) 55%, rgba(239,233,242,0));
+  padding: .95rem .85rem;
+  display: flex; flex-direction: column; align-items: flex-start;
+  background: linear-gradient(to top, rgba(12,17,32,.97) 62%, rgba(12,17,32,0));
 }
 .tanmono__shu {
   font-family: var(--deco);
-  font-size: .68rem; letter-spacing: .3em;
-  color: var(--ko-gane); margin: 0 0 .3em;
+  font-size: .68rem; letter-spacing: .26em;
+  color: var(--makie); margin: 0 0 .35em;
 }
 .tanmono__na {
   font-family: var(--mincho-b);
-  font-size: clamp(.95rem, 2.4vw, 1.1rem);
-  letter-spacing: .1em; margin: 0;
+  font-size: clamp(.95rem, 2.4vw, 1.12rem);
+  letter-spacing: .1em; margin: 0; white-space: nowrap;
+  color: var(--tomoshibi);
+}
+.tanmono__setsu, .tanmono__sunpo, .tanmono__jotai, .tanmono__ne {
+  margin: .55em 0 0;
+  opacity: 0; max-height: 0; overflow: hidden;
+  transition: opacity .45s ease .15s, max-height .55s ease;
+}
+.tanmono__setsu { font-size: .86rem; line-height: 1.85; color: var(--tomoshibi-usu); }
+
+/* 寸法 —— 数字。読み飛ばされては困るので罫で囲う */
+.tanmono__sunpo {
+  font-family: var(--gothic);
+  font-size: .8rem; letter-spacing: .1em;
+  padding: .38em .75em;
+  border: 1px solid var(--kin-koi);
+  color: var(--makie);
   white-space: nowrap;
 }
-.tanmono__setsu, .tanmono__ne {
-  margin: .5em 0 0;
-  opacity: 0; max-height: 0; overflow: hidden;
-  transition: opacity .4s ease .12s, max-height .5s ease;
+/* 状態 —— 正直に書く欄。紅の罫を一本引く */
+.tanmono__jotai {
+  font-size: .8rem; line-height: 1.8;
+  color: var(--tomoshibi-usu);
+  padding-left: .9em;
+  border-left: 2px solid var(--namida);
 }
-.tanmono__setsu { font-size: .86rem; line-height: 1.85; }
 .tanmono__ne {
-  font-family: var(--gothic); font-size: .82rem;
-  letter-spacing: .08em; color: var(--fuji-murasaki);
+  font-family: var(--gothic); font-size: .9rem;
+  letter-spacing: .08em; color: var(--raden);
 }
 .tanmono:hover .tanmono__setsu, .tanmono:focus-visible .tanmono__setsu,
 .tanmono[aria-expanded="true"] .tanmono__setsu,
+.tanmono:hover .tanmono__sunpo, .tanmono:focus-visible .tanmono__sunpo,
+.tanmono[aria-expanded="true"] .tanmono__sunpo,
+.tanmono:hover .tanmono__jotai, .tanmono:focus-visible .tanmono__jotai,
+.tanmono[aria-expanded="true"] .tanmono__jotai,
 .tanmono:hover .tanmono__ne, .tanmono:focus-visible .tanmono__ne,
 .tanmono[aria-expanded="true"] .tanmono__ne { opacity: 1; max-height: 8em; }
 
-/* 柄 —— 文様をCSSで織る */
+/* 文様 */
 .gara--yagasuri {
   background-image:
     linear-gradient(135deg, var(--iro) 25%, transparent 25%),
     linear-gradient(225deg, var(--iro) 25%, transparent 25%),
     linear-gradient(315deg, var(--iro) 25%, transparent 25%),
     linear-gradient(45deg,  var(--iro) 25%, transparent 25%);
-  background-color: rgba(255,255,255,.75);
+  background-color: var(--ji);
 }
 .gara--kikko {
   background-image:
     linear-gradient(30deg,  var(--iro) 12%, transparent 12.5%, transparent 87%, var(--iro) 87.5%),
     linear-gradient(150deg, var(--iro) 12%, transparent 12.5%, transparent 87%, var(--iro) 87.5%),
     linear-gradient(90deg,  var(--iro) 6%,  transparent 6.5%);
-  background-color: rgba(255,255,255,.72);
+  background-color: var(--ji);
 }
 .gara--seigaiha {
   background-image:
     radial-gradient(circle at 50% 100%, transparent 24%, var(--iro) 25%, var(--iro) 32%, transparent 33%),
     radial-gradient(circle at 0% 100%,  transparent 24%, var(--iro) 25%, var(--iro) 32%, transparent 33%),
     radial-gradient(circle at 100% 100%,transparent 24%, var(--iro) 25%, var(--iro) 32%, transparent 33%);
-  background-color: rgba(255,255,255,.75);
+  background-color: var(--ji);
 }
 .gara--asanoha {
   background-image:
     linear-gradient(60deg,  transparent 47%, var(--iro) 47%, var(--iro) 53%, transparent 53%),
     linear-gradient(-60deg, transparent 47%, var(--iro) 47%, var(--iro) 53%, transparent 53%),
     linear-gradient(0deg,   transparent 47%, var(--iro) 47%, var(--iro) 53%, transparent 53%);
-  background-color: rgba(255,255,255,.72);
+  background-color: var(--ji);
 }
 .gara--ichimatsu {
   background-image:
     linear-gradient(45deg, var(--iro) 25%, transparent 25%, transparent 75%, var(--iro) 75%),
     linear-gradient(45deg, var(--iro) 25%, transparent 25%, transparent 75%, var(--iro) 75%);
   background-position: 0 0, 13px 13px;
-  background-color: rgba(255,255,255,.75);
+  background-color: var(--ji);
 }
 
-.iro--fuji   { --iro: rgba(138,118,172,.55); }
-.iro--asagi  { --iro: rgba(127,163,160,.55); }
-.iro--kobai  { --iro: rgba(206,147,160,.55); }
-.iro--kogane { --iro: rgba(176,141,76,.48); }
+/* 夜に沈めた染めの色。地も暗く */
+.iro--fuji   { --iro: rgba(158,138,192,.62); --ji: #241E33; }
+.iro--asagi  { --iro: rgba(127,163,160,.62); --ji: #16262A; }
+.iro--kobai  { --iro: rgba(201,123,132,.58); --ji: #2A1B21; }
+.iro--kogane { --iro: rgba(201,169,97,.55);  --ji: #262014; }
 
 @media (max-width: 760px) {
-  .tanmono-dana {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    height: auto; gap: 8px;
-  }
+  .tanmono-dana { display: grid; grid-template-columns: repeat(2, 1fr); height: auto; gap: 8px; }
   .tanmono { aspect-ratio: 3 / 4; }
-  .tanmono__setsu, .tanmono__ne { opacity: 1; max-height: none; }
+  .tanmono__gara, .tanmono img { filter: none; }
+  .tanmono__setsu, .tanmono__sunpo, .tanmono__jotai, .tanmono__ne { opacity: 1; max-height: none; }
 }
 
 /* ==================================================================
@@ -343,151 +397,120 @@ a:hover { color: var(--fuji-murasaki); text-decoration-color: var(--fuji-murasak
 .shirase {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: clamp(1.5rem, 4vw, 3rem);
-  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3rem); align-items: start;
 }
-
-.kojou {
-  margin: 0;
-  font-family: var(--gothic);
-  font-size: .95rem;
-  line-height: 2.05;
-}
+.kojou { margin: 0; font-family: var(--gothic); font-size: .95rem; line-height: 2.05; }
 .kojou > div {
-  display: grid;
-  grid-template-columns: 5.5em 1fr;
-  gap: 0 1rem;
-  padding: .7rem 0;
-  border-bottom: 1px dotted var(--kane-usu);
+  display: grid; grid-template-columns: 5.5em 1fr; gap: 0 1rem;
+  padding: .75rem 0; border-bottom: 1px solid var(--kin-usu);
 }
-.kojou dt {
-  font-size: .78rem; letter-spacing: .22em;
-  color: var(--ko-gane); padding-top: .35em;
-}
-.kojou dd { margin: 0; }
-.kojou a { text-decoration: none; border-bottom: 1px solid var(--kane-usu); }
+.kojou dt { font-size: .78rem; letter-spacing: .22em; color: var(--makie); padding-top: .35em; }
+.kojou dd { margin: 0; color: var(--tomoshibi); }
+.kojou a { text-decoration: none; border-bottom: 1px solid var(--kin-usu); }
 
+/* 地図も夜に合わせる */
 .chizu {
-  width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--kane-usu);
-  filter: saturate(.55) contrast(.95);
+  width: 100%; aspect-ratio: 4 / 3;
+  border: 1px solid var(--kin-usu);
+  filter: invert(.9) hue-rotate(180deg) saturate(.5) brightness(.95) contrast(.9);
 }
 
 /* ==================================================================
-   ブログ
+   読みもの
    ================================================================== */
 
 .yomimono { list-style: none; margin: 0; padding: 0; }
-.yomimono > li { border-bottom: 1px solid var(--kane-usu); }
-.yomimono > li:first-child { border-top: 1px solid var(--kane-usu); }
+.yomimono > li { border-bottom: 1px solid var(--kin-usu); }
+.yomimono > li:first-child { border-top: 1px solid var(--kin-usu); }
 
 .hitokoma {
-  display: grid;
-  grid-template-columns: 7.5em 1fr;
-  gap: .4rem 1.75rem;
-  padding: clamp(1.4rem, 3.5vw, 2.1rem) .5rem;
-  text-decoration: none;
-  transition: background-color .3s ease;
+  display: grid; grid-template-columns: 7.5em 1fr; gap: .4rem 1.75rem;
+  padding: clamp(1.4rem, 3.5vw, 2.1rem) .75rem;
+  text-decoration: none; transition: background-color .35s ease;
 }
-.hitokoma:hover { background: rgba(255,255,255,.55); }
+.hitokoma:hover { background: rgba(233,217,176,.045); }
 .hitokoma__hi {
-  font-family: var(--deco);
-  font-size: .82rem; letter-spacing: .16em;
-  color: var(--ko-gane); padding-top: .5em;
+  font-family: var(--deco); font-size: .82rem; letter-spacing: .16em;
+  color: var(--makie); padding-top: .5em;
 }
 .hitokoma__dai {
   font-family: var(--mincho-b);
   font-size: clamp(1.05rem, 2.8vw, 1.28rem);
-  letter-spacing: .06em; line-height: 1.7; margin: 0;
+  letter-spacing: .06em; line-height: 1.7; margin: 0; color: var(--tomoshibi);
 }
-.hitokoma:hover .hitokoma__dai { color: var(--fuji-murasaki); }
-.hitokoma__nukigaki {
-  grid-column: 2; margin: .55em 0 0;
-  font-size: .92rem; color: var(--sumi-usu);
-}
+.hitokoma:hover .hitokoma__dai { color: var(--raden); }
+.hitokoma__nukigaki { grid-column: 2; margin: .55em 0 0; font-size: .92rem; color: var(--tomoshibi-usu); }
 @media (max-width: 620px) {
   .hitokoma { grid-template-columns: 1fr; }
   .hitokoma__nukigaki { grid-column: 1; }
 }
 
-/* 記事本文 */
-.honbun {
-  max-width: 38rem; margin-inline: auto;
-  font-size: 1.04rem; line-height: 2.15;
-}
+.honbun { max-width: 38rem; margin-inline: auto; font-size: 1.04rem; line-height: 2.15; }
 .honbun h2 {
-  font-family: var(--mincho-b);
-  font-size: 1.35rem; letter-spacing: .1em;
-  margin: 3rem 0 1.2rem; padding-bottom: .5rem;
-  border-bottom: 1px solid var(--kane-usu);
+  font-family: var(--mincho-b); font-size: 1.35rem; letter-spacing: .1em;
+  margin: 3rem 0 1.2rem; padding-bottom: .55rem; border-bottom: 1px solid var(--kin-usu);
 }
-.honbun h3 {
-  font-family: var(--mincho-b);
-  font-size: 1.12rem; letter-spacing: .08em; margin: 2.4rem 0 .9rem;
-}
+.honbun h3 { font-family: var(--mincho-b); font-size: 1.12rem; letter-spacing: .08em; margin: 2.4rem 0 .9rem; }
 .honbun p { margin: 0 0 1.7em; }
+.honbun strong { color: var(--raden); font-weight: 400; }
 .honbun blockquote {
   margin: 2em 0; padding: .2em 0 .2em 1.6em;
-  border-left: 2px solid var(--fuji-murasaki);
-  color: var(--sumi-usu); font-size: .96rem;
+  border-left: 2px solid var(--namida);
+  color: var(--tomoshibi-usu); font-size: .96rem;
 }
-.honbun img { margin: 2.2em auto; border: 1px solid var(--kane-usu); }
+.honbun img { margin: 2.2em auto; border: 1px solid var(--kin-usu); }
 .honbun ul, .honbun ol { padding-left: 1.4em; margin: 0 0 1.7em; }
 .honbun li { margin-bottom: .5em; }
-.honbun hr { border: 0; height: 1px; background: var(--kane-usu); margin: 3rem 0; }
+.honbun li::marker { color: var(--makie); }
+.honbun hr { border: 0; height: 1px; background: var(--kin-usu); margin: 3rem 0; }
 
-.kashira {
-  text-align: center; margin-bottom: clamp(2.5rem, 6vw, 4rem);
-}
+.kashira { text-align: center; margin-bottom: clamp(2.5rem, 6vw, 4rem); }
 .kashira__hi {
   font-family: var(--deco); font-size: .82rem;
-  letter-spacing: .34em; text-indent: .34em; color: var(--ko-gane);
-  margin: 0 0 1rem;
+  letter-spacing: .34em; text-indent: .34em; color: var(--makie); margin: 0 0 1rem;
 }
 .kashira__dai {
   font-family: var(--mincho-b);
   font-size: clamp(1.5rem, 4.5vw, 2.15rem);
   letter-spacing: .1em; line-height: 1.75; margin: 0;
+  text-shadow: 0 0 30px rgba(233,217,176,.2);
 }
 
-/* ---- 頁繰り ---------------------------------------------------- */
-
 .hera {
-  display: flex; justify-content: center; align-items: center;
+  display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
   gap: 2rem; margin-top: 3.5rem;
   font-family: var(--gothic); font-size: .85rem; letter-spacing: .16em;
 }
-.hera span { color: var(--sumi-usu); }
+.hera span { color: var(--tomoshibi-usu); }
 
 /* ---- 誘い ------------------------------------------------------ */
 
 .izanai {
   text-align: center;
   padding: clamp(2.5rem, 6vw, 4rem) 1.5rem;
-  border: 1px solid var(--kane-usu);
-  background: rgba(255,255,255,.55);
-  position: relative;
+  border: 1px solid var(--kin-usu);
+  background: rgba(233,217,176,.035);
 }
-.izanai p { margin: 0 0 1.5rem; }
+.izanai p { margin: 0 0 1.6rem; }
 
 .fumi {
-  display: inline-block;
+  display: inline-block; position: relative; overflow: hidden;
   font-family: var(--gothic);
   font-size: .88rem; letter-spacing: .24em; text-indent: .24em;
-  padding: .95em 2.6em;
-  border: 1px solid var(--nou-ai);
+  padding: 1em 2.7em;
+  border: 1px solid var(--kin-koi);
+  color: var(--tomoshibi);
   text-decoration: none;
-  position: relative;
-  transition: color .35s ease;
-  overflow: hidden;
+  transition: color .4s ease, box-shadow .4s ease;
+  z-index: 0;
 }
 .fumi::before {
-  content: ""; position: absolute; inset: 0;
-  background: var(--nou-ai);
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--makie);
   transform: scaleY(0); transform-origin: bottom;
-  transition: transform .35s cubic-bezier(.22,.61,.36,1);
-  z-index: -1;
+  transition: transform .4s cubic-bezier(.22,.61,.36,1);
 }
-.fumi:hover { color: var(--shiro-fuji); }
+.fumi:hover { color: var(--yoru-fuka); box-shadow: 0 0 26px rgba(201,169,97,.28); }
 .fumi:hover::before { transform: scaleY(1); }
 
 /* ---- 足 -------------------------------------------------------- */
@@ -495,23 +518,20 @@ a:hover { color: var(--fuji-murasaki); text-decoration-color: var(--fuji-murasak
 .ashimoto {
   margin-top: var(--ma);
   padding: clamp(2rem, 5vw, 3rem) 1rem 1.5rem;
-  border-top: 1px solid var(--kane-usu);
+  border-top: 1px solid var(--kin-usu);
   text-align: center;
   font-family: var(--gothic);
   font-size: .82rem; line-height: 2.1;
-  color: var(--sumi-usu);
+  color: var(--tomoshibi-usu);
 }
 .ashimoto__na {
   font-family: var(--mincho-b); font-size: 1.05rem;
   letter-spacing: .3em; text-indent: .3em;
-  color: var(--nou-ai); margin: 0 0 .8rem;
+  color: var(--tomoshibi); margin: 0 0 .8rem;
 }
 .ashimoto__sns {
   display: flex; justify-content: center; gap: 1.5rem;
   margin: 1.2rem 0 0; padding: 0; list-style: none;
   letter-spacing: .16em; font-size: .8rem;
 }
-.ashimoto__ki {
-  margin-top: 1.8rem; font-family: var(--deco);
-  font-size: .72rem; letter-spacing: .28em;
-}
+.ashimoto__ki { margin-top: 1.8rem; font-family: var(--deco); font-size: .72rem; letter-spacing: .28em; color: var(--makie); }
