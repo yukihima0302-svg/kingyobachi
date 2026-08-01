@@ -2,14 +2,14 @@
   <div class="noren__kousen" aria-hidden="true"></div>
   <p class="noren__latin">{{ site.latin_name }}</p>
   <h1 class="noren__na">
-    <a href="{{ '/' | relative_url }}" style="text-decoration:none;color:inherit;">{{ site.title }}</a>
+    <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
   </h1>
   <p class="noren__soe">{{ site.tagline }}</p>
 </header>
 
 <nav class="annai" aria-label="サイト内の案内">
-  <a href="{{ '/' | relative_url }}"        {% if page.url == '/' %}aria-current="page"{% endif %}>ごあいさつ</a>
-  <a href="{{ '/gallery/' | relative_url }}"{% if page.url contains 'gallery' %}aria-current="page"{% endif %}>反物と品もの</a>
+  <a href="{{ '/' | relative_url }}"        {% if page.url == '/' %}aria-current="page"{% endif %}>はじめに</a>
+  <a href="{{ '/gallery/' | relative_url }}"{% if page.url contains 'gallery' %}aria-current="page"{% endif %}>きもの一覧</a>
   <a href="{{ '/blog/' | relative_url }}"   {% if page.url contains 'blog' %}aria-current="page"{% endif %}>読みもの</a>
-  <a href="{{ '/info/' | relative_url }}"   {% if page.url contains 'info' %}aria-current="page"{% endif %}>店のこと</a>
+  <a href="{{ '/info/' | relative_url }}"   {% if page.url contains 'info' %}aria-current="page"{% endif %}>買いかた</a>
 </nav>

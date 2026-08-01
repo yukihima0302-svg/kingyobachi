@@ -1,0 +1,149 @@
+---
+layout: default
+---
+
+<article class="shina" data-shina="{{ page.shinamei }}" data-ne="{% if page.price != '' %}{{ page.price }}{% else %}お問い合わせ{% endif %}">
+
+  <div class="shina__kashira">
+    <p class="shina__shu">
+      {{ page.kind }}{% if page.era != "" %}　{{ page.era }}{% endif %}
+      {% if page.sold %}<span class="shina__uri">売り切れ</span>{% endif %}
+    </p>
+    <h1 class="shina__na">{{ page.shinamei }}</h1>
+  </div>
+
+  <div class="shina__waku">
+
+    {%- comment -%} 写真。無ければ文様を織って代わりに置く {%- endcomment -%}
+    <div class="shina__sugata">
+      {% if page.images.size > 0 %}
+        <div class="shashin">
+          {% for im in page.images %}
+          <img src="{{ '/assets/img/' | append: im | relative_url }}"
+               alt="{{ page.shinamei }}{% if forloop.index > 1 %}（{{ forloop.index }}枚目）{% endif %}"
+               loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="shashin shashin--nashi gara--{{ page.pattern }} iro--{{ page.tone }}" aria-hidden="true"></div>
+        <p class="shashin__kotowari">写真を準備しています。文様のみお見せしています。</p>
+      {% endif %}
+    </div>
+
+    {%- comment -%} 買う側の判断材料。ここが商品ページの本体 {%- endcomment -%}
+    <div class="shina__fuda">
+
+      <p class="shina__ne{% if page.sold %} shina__ne--sumi{% endif %}">
+        {% if page.price != "" %}{{ page.price }}{% else %}お問い合わせください{% endif %}
+      </p>
+
+      <table class="sunpo">
+        <caption>寸法</caption>
+        <tbody>
+          <tr><th>身丈</th><td>{% if page.shitake != "" %}{{ page.shitake }} cm{% else %}—{% endif %}</td></tr>
+          <tr><th>裄</th>  <td>{% if page.yuki != "" %}{{ page.yuki }} cm{% else %}—{% endif %}</td></tr>
+          {% if page.sodetake != "" %}<tr><th>袖丈</th><td>{{ page.sodetake }} cm</td></tr>{% endif %}
+          {% if page.midaba != "" %}<tr><th>前幅</th><td>{{ page.midaba }} cm</td></tr>{% endif %}
+        </tbody>
+      </table>
+      <p class="sunpo__soe">身丈は身長と同じくらいが目安です。裄は二センチ足りないと手首が出ます。</p>
+
+      <div class="jotai">
+        <p class="jotai__mi">状態</p>
+        <p class="jotai__ji">{{ page.jotai }}</p>
+      </div>
+
+      {%- comment -%} 注文口 {%- endcomment -%}
+      {% if page.sold %}
+        <p class="chumon__sumi">この一枚はお嫁に行きました。<br>似たものが入りましたら、またご紹介します。</p>
+      {% elsif page.kounyu_url != "" %}
+        <a class="fumi fumi--kai" href="{{ page.kounyu_url }}" rel="noopener">
+          {% if site.shop.shop_name != "" %}{{ site.shop.shop_name }}で買う{% else %}このきものを買う{% endif %}
+        </a>
+      {% else %}
+        <button class="fumi fumi--kai" type="button" data-chumon>このきものを注文する</button>
+      {% endif %}
+
+      <p class="shina__toi">
+        写真を追加でお送りします。<br>
+        <a href="tel:{{ site.shop.tel | replace: '-', '' }}">{{ site.shop.tel }}</a>
+        <span>{{ site.shop.hours }}</span>
+      </p>
+
+    </div>
+  </div>
+
+  {% if content != "" %}
+  <div class="shina__hanashi">
+    {{ content }}
+  </div>
+  {% endif %}
+
+</article>
+
+{%- comment -%} 注文の紙。押されたときだけ開く {%- endcomment -%}
+<div class="kami" data-kami hidden>
+  <div class="kami__naka" role="dialog" aria-modal="true" aria-label="ご注文">
+    <button class="kami__tojiru" type="button" data-tojiru aria-label="閉じる">×</button>
+
+    <p class="kami__mi">ご注文</p>
+    <p class="kami__soe">
+      下の内容をお送りください。折り返し、お支払い方法をご案内します。<br>
+      <strong>この時点ではまだ確定しません。</strong>こちらから返信するまで、お支払いは不要です。
+    </p>
+
+    <label class="kami__ran">
+      <span>お名前</span>
+      <input type="text" data-na autocomplete="name" placeholder="金魚 花子">
+    </label>
+    <label class="kami__ran">
+      <span>ご連絡先（電話またはメール）</span>
+      <input type="text" data-saki autocomplete="tel" placeholder="090-0000-0000">
+    </label>
+    <label class="kami__ran">
+      <span>ご質問・ご要望（任意）</span>
+      <textarea data-toi rows="3" placeholder="衿の内側の写真を見せてください、など"></textarea>
+    </label>
+
+    <div class="kami__fumi" data-fumi></div>
+
+    <div class="kami__te">
+      <button class="fumi" type="button" data-utsusu>文面をコピーする</button>
+      {% if site.shop.mail != "" %}
+      <a class="fumi" href="#" data-mail data-atesaki="{{ site.shop.mail }}">メールで送る</a>
+      {% endif %}
+      <a class="fumi" href="tel:{{ site.shop.tel | replace: '-', '' }}">電話する</a>
+    </div>
+
+    <p class="kami__kotowari">
+      送料 {{ site.shop.soryo }}／発送 {{ site.shop.hasso }}<br>
+      {{ site.shop.henpin }}
+    </p>
+  </div>
+</div>
+
+<div class="kugiri">
+  <span class="kugiri__ji">ほかの一枚<small>OTHERS</small></span>
+</div>
+
+<div class="tanmono-dana">
+  {% assign hoka = site.kimono | where_exp: "k", "k.url != page.url" | sort: "order" %}
+  {% for t in hoka limit: 5 %}
+  <a class="tanmono{% if t.sold %} tanmono--sumi{% endif %}" href="{{ t.url | relative_url }}">
+    {% if t.images.size > 0 %}
+      <img src="{{ '/assets/img/' | append: t.images.first | relative_url }}" alt="{{ t.shinamei }}">
+    {% else %}
+      <span class="tanmono__gara gara--{{ t.pattern }} iro--{{ t.tone }}" aria-hidden="true"></span>
+    {% endif %}
+    <span class="tanmono__fuda">
+      <span class="tanmono__shu">{{ t.kind }}</span>
+      <span class="tanmono__na">{{ t.shinamei }}</span>
+      <span class="tanmono__ne">{% if t.sold %}売り切れ{% elsif t.price != "" %}{{ t.price }}{% else %}お問い合わせ{% endif %}</span>
+    </span>
+  </a>
+  {% endfor %}
+</div>
+
+<p style="text-align:center;margin-top:2.5rem;">
+  <a class="fumi" href="{{ '/gallery/' | relative_url }}">すべてのきものを見る</a>
+</p>

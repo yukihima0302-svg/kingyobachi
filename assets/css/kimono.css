@@ -535,3 +535,219 @@ a:hover { color: var(--raden); text-decoration-color: var(--raden); }
   letter-spacing: .16em; font-size: .8rem;
 }
 .ashimoto__ki { margin-top: 1.8rem; font-family: var(--deco); font-size: .72rem; letter-spacing: .28em; color: var(--makie); }
+
+/* ==================================================================
+   商品ページ —— 箱から取り出した、一枚だけ
+   ================================================================== */
+
+.tanmono { text-decoration: none; }
+.tanmono--sumi { opacity: .45; }
+
+.shina__kashira { text-align: center; margin-bottom: clamp(2rem, 5vw, 3rem); }
+.shina__shu {
+  font-family: var(--deco); font-size: .8rem;
+  letter-spacing: .3em; text-indent: .3em; color: var(--makie); margin: 0 0 1rem;
+}
+.shina__uri {
+  display: inline-block; margin-left: 1em;
+  font-family: var(--gothic); font-size: .72rem; letter-spacing: .2em;
+  padding: .3em 1em; border: 1px solid var(--namida); color: var(--namida);
+}
+.shina__na {
+  font-family: var(--mincho-b);
+  font-size: clamp(1.7rem, 5vw, 2.5rem);
+  letter-spacing: .12em; line-height: 1.6; margin: 0;
+  text-shadow: 0 0 30px rgba(233,217,176,.22);
+}
+
+.shina__waku {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(min(100%, 300px), .85fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+}
+@media (max-width: 800px) { .shina__waku { grid-template-columns: 1fr; } }
+
+.shashin { display: grid; gap: 10px; }
+.shashin img { width: 100%; border: 1px solid var(--kin-usu); }
+.shashin--nashi {
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--kin-usu);
+  background-size: 30px 30px;
+}
+.shashin__kotowari {
+  margin: .9rem 0 0; text-align: center;
+  font-family: var(--gothic); font-size: .78rem;
+  letter-spacing: .1em; color: var(--tomoshibi-usu);
+}
+
+.shina__fuda {
+  border: 1px solid var(--kin-usu);
+  background: rgba(233,217,176,.035);
+  padding: clamp(1.4rem, 3vw, 2rem);
+  position: sticky; top: 1.5rem;
+}
+@media (max-width: 800px) { .shina__fuda { position: static; } }
+
+.shina__ne {
+  font-family: var(--mincho-b);
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  letter-spacing: .08em; color: var(--raden);
+  margin: 0 0 1.6rem; padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--kin-usu);
+}
+.shina__ne--sumi { color: var(--tomoshibi-usu); text-decoration: line-through; }
+
+.sunpo {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--gothic); font-size: .9rem; margin-bottom: .8rem;
+}
+.sunpo caption {
+  text-align: left; font-size: .74rem; letter-spacing: .26em;
+  color: var(--makie); padding-bottom: .7rem;
+}
+.sunpo th, .sunpo td { padding: .6em .2em; border-bottom: 1px solid var(--kin-usu); }
+.sunpo th { text-align: left; font-weight: 400; color: var(--tomoshibi-usu); width: 5em; }
+.sunpo td { text-align: right; color: var(--makie); letter-spacing: .06em; }
+.sunpo__soe {
+  font-size: .76rem; line-height: 1.8;
+  color: var(--tomoshibi-usu); margin: 0 0 1.6rem;
+}
+
+.jotai { margin-bottom: 1.8rem; padding-left: 1em; border-left: 2px solid var(--namida); }
+.jotai__mi {
+  font-family: var(--gothic); font-size: .74rem;
+  letter-spacing: .26em; color: var(--namida); margin: 0 0 .5em;
+}
+.jotai__ji { margin: 0; font-size: .9rem; line-height: 1.9; }
+
+.fumi--kai { display: block; width: 100%; text-align: center; cursor: pointer; }
+
+.chumon__sumi {
+  text-align: center; font-size: .88rem; line-height: 1.9;
+  color: var(--tomoshibi-usu);
+  padding: 1.2em; border: 1px dashed var(--kin-usu); margin: 0;
+}
+
+.shina__toi {
+  margin: 1.6rem 0 0; text-align: center;
+  font-family: var(--gothic); font-size: .8rem; line-height: 1.9;
+  color: var(--tomoshibi-usu);
+}
+.shina__toi a { color: var(--makie); }
+.shina__toi span { display: block; font-size: .92em; }
+
+.shina__hanashi {
+  max-width: 38rem; margin: clamp(3rem, 7vw, 4.5rem) auto 0;
+  font-size: 1.02rem; line-height: 2.15;
+  padding-top: clamp(2rem, 5vw, 3rem);
+  border-top: 1px solid var(--kin-usu);
+}
+.shina__hanashi p { margin: 0 0 1.6em; }
+
+/* 売れた一枚の棚 */
+.sumi-dana {
+  list-style: none; margin: 0 0 1rem; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr)); gap: 1px;
+  background: var(--kin-usu); border: 1px solid var(--kin-usu);
+}
+.sumi-dana a {
+  display: block; padding: 1.1rem 1rem;
+  background: var(--yoru); text-decoration: none;
+  transition: background-color .3s ease;
+}
+.sumi-dana a:hover { background: var(--hako); }
+.sumi-dana__na {
+  display: block; font-family: var(--mincho-b);
+  font-size: .95rem; letter-spacing: .06em; color: var(--tomoshibi-usu);
+}
+.sumi-dana__shu {
+  display: block; margin-top: .4em;
+  font-family: var(--deco); font-size: .68rem;
+  letter-spacing: .2em; color: var(--makie);
+}
+
+/* ==================================================================
+   注文の紙
+   ================================================================== */
+
+.kami {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.2rem;
+  background: rgba(6, 9, 18, .88);
+  overflow-y: auto;
+  animation: sotto .35s ease both;
+}
+.kami[hidden] { display: none; }
+@keyframes sotto { from { opacity: 0; } to { opacity: 1; } }
+
+.kami__naka {
+  position: relative;
+  width: min(100%, 34rem);
+  max-height: 100%;
+  overflow-y: auto;
+  padding: clamp(1.6rem, 4vw, 2.4rem);
+  background: linear-gradient(to bottom, var(--hako), var(--yoru-fuka));
+  border: 1px solid var(--kin-koi);
+  box-shadow: 0 30px 90px rgba(0,0,0,.6);
+  animation: futa-aku .5s cubic-bezier(.16,.84,.34,1) both;
+}
+.kami__tojiru {
+  position: absolute; top: .5rem; right: .7rem;
+  background: none; border: 0; cursor: pointer;
+  font-size: 1.5rem; line-height: 1; color: var(--tomoshibi-usu);
+  padding: .3em;
+}
+.kami__tojiru:hover { color: var(--tomoshibi); }
+
+.kami__mi {
+  font-family: var(--mincho-b); font-size: 1.25rem;
+  letter-spacing: .24em; text-indent: .24em;
+  margin: 0 0 1rem; text-align: center; color: var(--tomoshibi);
+}
+.kami__soe {
+  font-size: .84rem; line-height: 1.95; text-align: center;
+  color: var(--tomoshibi-usu); margin: 0 0 1.8rem;
+}
+.kami__soe strong { color: var(--raden); font-weight: 400; }
+
+.kami__ran { display: block; margin-bottom: 1.1rem; }
+.kami__ran > span {
+  display: block; font-family: var(--gothic);
+  font-size: .76rem; letter-spacing: .18em;
+  color: var(--makie); margin-bottom: .5em;
+}
+.kami__ran input, .kami__ran textarea {
+  width: 100%; padding: .8em .9em;
+  background: rgba(12,17,32,.7);
+  border: 1px solid var(--kin-usu);
+  color: var(--tomoshibi);
+  font-family: var(--mincho); font-size: .95rem; line-height: 1.8;
+  resize: vertical;
+}
+.kami__ran input::placeholder, .kami__ran textarea::placeholder { color: rgba(233,217,176,.28); }
+.kami__ran input:focus, .kami__ran textarea:focus {
+  outline: none; border-color: var(--makie);
+  box-shadow: 0 0 18px rgba(201,169,97,.16);
+}
+
+.kami__fumi {
+  white-space: pre-wrap; word-break: break-word;
+  font-family: var(--gothic); font-size: .78rem; line-height: 1.95;
+  color: var(--tomoshibi-usu);
+  padding: 1rem 1.1rem; margin: 1.5rem 0;
+  background: rgba(12,17,32,.6);
+  border: 1px dashed var(--kin-usu);
+  max-height: 13rem; overflow-y: auto;
+}
+
+.kami__te { display: grid; gap: .7rem; }
+.kami__te .fumi { text-align: center; padding: .85em 1.4em; cursor: pointer; }
+
+.kami__kotowari {
+  margin: 1.6rem 0 0; text-align: center;
+  font-family: var(--gothic); font-size: .74rem; line-height: 1.9;
+  color: var(--tomoshibi-usu);
+  padding-top: 1.2rem; border-top: 1px solid var(--kin-usu);
+}

@@ -1,41 +1,64 @@
 ---
 layout: page
 title: きもの一覧
-latin: TEXTILES
+latin: KIMONO
 permalink: /gallery/
-lead: すべて一点物です。名前に触れると広がって、寸法と状態が出ます。数字が合いそうなら、店で羽織ってみてください。
+lead: すべて一点物です。触れると広がって、寸法と状態が出ます。まずはその数字を、お手持ちのきものと見比べてみてください。
 ---
 
+{% assign shina = site.kimono | sort: "order" %}
+{% assign aru = shina | where: "sold", false %}
+{% assign sumi = shina | where: "sold", true %}
+
 <div class="tanmono-dana">
-  {% for t in site.data.gallery %}
-  <button class="tanmono" type="button" aria-expanded="false">
-    {% if t.image != "" %}
-      <img src="{{ '/assets/img/' | append: t.image | relative_url }}" alt="{{ t.name }}">
+  {% for t in aru %}
+  <a class="tanmono" href="{{ t.url | relative_url }}">
+    {% if t.images.size > 0 %}
+      <img src="{{ '/assets/img/' | append: t.images.first | relative_url }}" alt="{{ t.shinamei }}">
     {% else %}
       <span class="tanmono__gara gara--{{ t.pattern }} iro--{{ t.tone }}" aria-hidden="true"></span>
     {% endif %}
     <span class="tanmono__fuda">
-      <span class="tanmono__shu">{{ t.kind }}{% if t.era %}　{{ t.era }}{% endif %}</span>
-      <span class="tanmono__na">{{ t.name }}</span>
-      <span class="tanmono__setsu">{{ t.note }}</span>
+      <span class="tanmono__shu">{{ t.kind }}{% if t.era != "" %}　{{ t.era }}{% endif %}</span>
+      <span class="tanmono__na">{{ t.shinamei }}</span>
+      <span class="tanmono__setsu">{{ t.content | strip_html | strip_newlines | truncate: 46 }}</span>
       <span class="tanmono__sunpo">身丈 {{ t.shitake }}　裄 {{ t.yuki }}</span>
       <span class="tanmono__jotai">{{ t.jotai }}</span>
       <span class="tanmono__ne">{% if t.price != "" %}{{ t.price }}{% else %}お問い合わせください{% endif %}</span>
     </span>
-  </button>
+  </a>
   {% endfor %}
 </div>
+
+{% if sumi.size > 0 %}
+<div class="kugiri">
+  <span class="kugiri__ji">お嫁に行った一枚<small>SOLD</small></span>
+</div>
+
+<p class="maegaki" style="margin-bottom:2rem;">こういうものを扱っています、というご参考に。同じものは二度と入りませんが、似た織りが入ることはあります。</p>
+
+<ul class="sumi-dana">
+  {% for t in sumi %}
+  <li>
+    <a href="{{ t.url | relative_url }}">
+      <span class="sumi-dana__na">{{ t.shinamei }}</span>
+      <span class="sumi-dana__shu">{{ t.kind }}</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
 
 <div class="kugiri">
   <span class="kugiri__ji">お求めについて<small>NOTES</small></span>
 </div>
 
 <div class="maegaki">
-  <p>一枚しかないものばかりなので、売れたら終わりです。気になるものはお取り置きしますので、電話でお知らせください。</p>
-  <p>状態の欄は、見つけた傷みをそのまま書いています。書いていない小さな汚れが見つかることもありますので、気になる方は店頭でお確かめください。寸法直しのご相談も承ります。</p>
+  <p>一枚しかないものばかりなので、売れたら終わりです。気になるものはお取り置きしますので、お知らせください。</p>
+  <p>状態の欄には、見つけた傷みをそのまま書いています。古いものですので、書ききれない小さな汚れやヤケがある場合もあります。気になる箇所は、お申しつけいただければ写真をお送りします。買う前に見ていただくほうが、お互いのためです。</p>
 </div>
 
 <div class="izanai">
-  <p>気になる一枚があれば、電話一本でお取り置きします。</p>
+  <p>気になる一枚があれば、お取り置きします。<br>寸法のご相談も、追加の写真も、お電話でどうぞ。</p>
   <a class="fumi" href="tel:{{ site.shop.tel | replace: '-', '' }}">{{ site.shop.tel }}</a>
 </div>

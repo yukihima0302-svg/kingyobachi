@@ -8,35 +8,36 @@ layout: default
 
 <div class="maegaki">
   <p>{{ site.shop.established }}の創業から、この町できものを扱ってまいりました。祖父の代からの反物が蔵に眠り、新しい織りが毎月届きます。</p>
-  <p>古いきものは寸法が小さく、傷みもあります。そこを隠すつもりはありません。身丈と裄、状態を一枚ごとに書いていますので、まずそこを見てください。合いそうなものがあれば、店で羽織ってみるのが確実です。</p>
+  <p>店舗を持たず、オンラインだけでやっています。羽織ってみていただけない代わりに、<strong>寸法と傷みは一枚ずつ、隠さず書いています。</strong>着られるかどうかは、まずその数字で判断してください。迷ったらお電話ください。写真を追加でお送りします。</p>
 </div>
 
 <div class="kugiri">
   <span class="kugiri__ji">今週入った一枚<small>NEW ARRIVALS</small></span>
 </div>
 
+{% assign shina = site.kimono | where: "sold", false | sort: "order" %}
 <div class="tanmono-dana">
-  {% for t in site.data.gallery limit: 5 %}
-  <button class="tanmono" type="button" aria-expanded="false">
-    {% if t.image != "" %}
-      <img src="{{ '/assets/img/' | append: t.image | relative_url }}" alt="{{ t.name }}">
+  {% for t in shina limit: 5 %}
+  <a class="tanmono" href="{{ t.url | relative_url }}">
+    {% if t.images.size > 0 %}
+      <img src="{{ '/assets/img/' | append: t.images.first | relative_url }}" alt="{{ t.shinamei }}">
     {% else %}
       <span class="tanmono__gara gara--{{ t.pattern }} iro--{{ t.tone }}" aria-hidden="true"></span>
     {% endif %}
     <span class="tanmono__fuda">
-      <span class="tanmono__shu">{{ t.kind }}{% if t.era %}　{{ t.era }}{% endif %}</span>
-      <span class="tanmono__na">{{ t.name }}</span>
-      <span class="tanmono__setsu">{{ t.note }}</span>
+      <span class="tanmono__shu">{{ t.kind }}{% if t.era != "" %}　{{ t.era }}{% endif %}</span>
+      <span class="tanmono__na">{{ t.shinamei }}</span>
+      <span class="tanmono__setsu">{{ t.content | strip_html | strip_newlines | truncate: 46 }}</span>
       <span class="tanmono__sunpo">身丈 {{ t.shitake }}　裄 {{ t.yuki }}</span>
       <span class="tanmono__jotai">{{ t.jotai }}</span>
       <span class="tanmono__ne">{% if t.price != "" %}{{ t.price }}{% else %}お問い合わせください{% endif %}</span>
     </span>
-  </button>
+  </a>
   {% endfor %}
 </div>
 
 <p style="text-align:center;margin-top:2.5rem;">
-  <a class="fumi" href="{{ '/gallery/' | relative_url }}">すべての品を見る</a>
+  <a class="fumi" href="{{ '/gallery/' | relative_url }}">すべてのきものを見る</a>
 </p>
 
 <div class="kugiri">
@@ -56,19 +57,19 @@ layout: default
 </ul>
 
 <div class="kugiri">
-  <span class="kugiri__ji">店のこと<small>THE SHOP</small></span>
+  <span class="kugiri__ji">買いかた<small>HOW TO BUY</small></span>
 </div>
 
 <div class="shirase">
   <dl class="kojou">
-    <div><dt>所在地</dt><dd>{{ site.shop.address }}</dd></div>
-    <div><dt>電話</dt><dd><a href="tel:{{ site.shop.tel | replace: '-', '' }}">{{ site.shop.tel }}</a></dd></div>
-    <div><dt>営業時間</dt><dd>{{ site.shop.hours }}</dd></div>
-    <div><dt>定休日</dt><dd>{{ site.shop.closed }}</dd></div>
+    <div><dt>送料</dt><dd>{{ site.shop.soryo }}</dd></div>
+    <div><dt>発送</dt><dd>{{ site.shop.hasso }}</dd></div>
+    <div><dt>返品</dt><dd>{{ site.shop.henpin }}</dd></div>
+    <div><dt>お問い合わせ</dt><dd><a href="tel:{{ site.shop.tel | replace: '-', '' }}">{{ site.shop.tel }}</a>　{{ site.shop.hours }}</dd></div>
   </dl>
 
   <div class="izanai">
-    <p>見るだけのご来店も、寸法だけのご相談も、どうぞ。</p>
-    <a class="fumi" href="{{ '/info/' | relative_url }}">地図とアクセス</a>
+    <p>寸法が合うか分からない。写真をもっと見たい。<br>どんなことでも、答えます。</p>
+    <a class="fumi" href="{{ '/info/' | relative_url }}">買いかたを読む</a>
   </div>
 </div>
