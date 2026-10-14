@@ -232,17 +232,18 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
         <textarea id="jotai" rows="2" placeholder="衿元に薄いシミが二点。着用時は帯で隠れます"></textarea>
       </label>
       <label>
-        <span>値段 <i>空にすると「お問い合わせください」</i></span>
-        <input id="price" placeholder="18,000円">
+        <span>値段 <i>数字だけ入れれば「18,000円」の形に整います</i></span>
+        <input id="price" inputmode="numeric" placeholder="18000">
       </label>
       <div class="yoko">
         <input type="checkbox" id="sold">
         <span>売り切れ</span>
       </div>
       <label>
-        <span>メルカリの商品URL</span>
+        <span>メルカリの商品URL <i>入れると「メルカリで買う」ボタンになります</i></span>
         <input id="kounyu" placeholder="https://jp.mercari.com/item/m00000000000">
       </label>
+      <p class="chui" id="kounyuSoe">空のままだと、注文フォームが開くボタンになります。</p>
     </fieldset>
 
     <fieldset>
@@ -638,6 +639,41 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
     id("kakidashiSoe").textContent =
       "長辺1600pxに縮めて、名前をつけ直したものが落ちてきます。それを assets/img に上げてください。";
   });
+
+  /* ---- 値段を整える ------------------------------------------
+     全角で打っても、カンマや「円」を忘れても、同じ形に揃える。
+     「お問い合わせください」のような文字はそのまま残す。 */
+  (function(){
+    var ran = id("price");
+
+    function hankaku(s){
+      return s.replace(/[０-９]/g, function(c){
+        return String.fromCharCode(c.charCodeAt(0) - 0xFEE0);
+      }).replace(/[，、]/g, ",");
+    }
+
+    ran.addEventListener("blur", function(){
+      var s = hankaku(ran.value.trim());
+      if (s === "") return;
+      var suji = s.replace(/[,\s円]/g, "");
+      if (/^\d+$/.test(suji)) {
+        ran.value = Number(suji).toLocaleString("ja-JP") + "円";
+        kumu();
+      }
+    });
+  })();
+
+  /* ---- 購入URLの有無で説明を変える ---------------------------- */
+  (function(){
+    var ran = id("kounyu"), soe = id("kounyuSoe");
+    function utsuru(){
+      soe.textContent = ran.value.trim()
+        ? "「メルカリで買う」ボタンになり、そのURLへ飛びます。"
+        : "空のままだと、注文フォームが開くボタンになります。";
+    }
+    ran.addEventListener("input", utsuru);
+    utsuru();
+  })();
 
   kakinaosuShashin();
 })();
