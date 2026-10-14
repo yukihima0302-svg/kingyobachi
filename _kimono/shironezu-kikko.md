@@ -1,11 +1,18 @@
 ---
 shinamei: "白鼠 亀甲繋ぎ"
+bunrui: "きもの"
 kind: "紬"
 era: "昭和中期"
 shitake: "153"
 yuki: "64"
 sodetake: ""
 midaba: ""
+nagasa: ""
+haba: ""
+himo: ""
+yokohaba: ""
+takasa: ""
+sozai: ""
 jotai: "目立つ傷みなし。裏地に薄い変色"
 price: "24,000円"
 sold: false

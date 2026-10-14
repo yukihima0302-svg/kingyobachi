@@ -1,11 +1,18 @@
 ---
 shinamei: "藤色 矢絣"
+bunrui: "きもの"
 kind: "銘仙"
 era: "大正末〜昭和初期"
 shitake: "148"
 yuki: "62"
 sodetake: ""
 midaba: ""
+nagasa: ""
+haba: ""
+himo: ""
+yokohaba: ""
+takasa: ""
+sozai: ""
 jotai: "衿元に薄いシミが二点。着用時は帯で隠れます"
 price: "18,000円"
 sold: false

@@ -1,11 +1,18 @@
 ---
 shinamei: "生成 麻の葉"
+bunrui: "きもの"
 kind: "長羽織"
 era: "昭和初期"
 shitake: "110"
 yuki: "61"
 sodetake: ""
 midaba: ""
+nagasa: ""
+haba: ""
+himo: ""
+yokohaba: ""
+takasa: ""
+sozai: ""
 jotai: "裏地に汗ジミ。表は良好"
 price: "12,000円"
 sold: false

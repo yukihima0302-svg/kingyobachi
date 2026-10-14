@@ -1,11 +1,18 @@
 ---
 shinamei: "藤鼠 変わり矢絣"
+bunrui: "きもの"
 kind: "銘仙"
 era: "大正末"
 shitake: "146"
 yuki: "61"
 sodetake: ""
 midaba: ""
+nagasa: ""
+haba: ""
+himo: ""
+yokohaba: ""
+takasa: ""
+sozai: ""
 jotai: "全体に細かな薄ヤケ。値段に反映しています"
 price: "9,000円"
 sold: true

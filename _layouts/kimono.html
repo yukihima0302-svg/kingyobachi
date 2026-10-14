@@ -25,7 +25,7 @@ layout: default
           {% endfor %}
         </div>
       {% else %}
-        <div class="shashin shashin--nashi gara--{{ page.pattern }} iro--{{ page.tone }}" aria-hidden="true"></div>
+        <div class="shashin shashin--nashi{% if page.bunrui == "帯留め" %} shashin--komono{% endif %} gara--{{ page.pattern }} iro--{{ page.tone }}" aria-hidden="true"></div>
         <p class="shashin__kotowari">写真を準備しています。文様のみお見せしています。</p>
       {% endif %}
     </div>
@@ -40,13 +40,29 @@ layout: default
       <table class="sunpo">
         <caption>寸法</caption>
         <tbody>
+        {% if page.bunrui == "帯留め" %}
+          <tr><th>紐通し</th><td>{% if page.himo != "" %}{{ page.himo }}{% else %}—{% endif %}</td></tr>
+          <tr><th>横幅</th>  <td>{% if page.yokohaba != "" %}{{ page.yokohaba }} cm{% else %}—{% endif %}</td></tr>
+          <tr><th>高さ</th>  <td>{% if page.takasa != "" %}{{ page.takasa }} cm{% else %}—{% endif %}</td></tr>
+          {% if page.sozai != "" %}<tr><th>素材</th><td>{{ page.sozai }}</td></tr>{% endif %}
+        {% elsif page.bunrui == "帯" %}
+          <tr><th>長さ</th><td>{% if page.nagasa != "" %}{{ page.nagasa }} cm{% else %}—{% endif %}</td></tr>
+          <tr><th>幅</th>  <td>{% if page.haba != "" %}{{ page.haba }} cm{% else %}—{% endif %}</td></tr>
+        {% else %}
           <tr><th>身丈</th><td>{% if page.shitake != "" %}{{ page.shitake }} cm{% else %}—{% endif %}</td></tr>
           <tr><th>裄</th>  <td>{% if page.yuki != "" %}{{ page.yuki }} cm{% else %}—{% endif %}</td></tr>
           {% if page.sodetake != "" %}<tr><th>袖丈</th><td>{{ page.sodetake }} cm</td></tr>{% endif %}
           {% if page.midaba != "" %}<tr><th>前幅</th><td>{{ page.midaba }} cm</td></tr>{% endif %}
+        {% endif %}
         </tbody>
       </table>
-      <p class="sunpo__soe">身丈は身長と同じくらいが目安です。裄は二センチ足りないと手首が出ます。</p>
+      {% if page.bunrui == "帯留め" %}
+      <p class="sunpo__soe">三分紐はおよそ1cm、四分紐はおよそ1.2cm幅です。<strong>お手持ちの紐が通るかを、まずご確認ください。</strong></p>
+      {% elsif page.bunrui == "帯" %}
+      <p class="sunpo__soe">名古屋帯の長さは、お太鼓を結んだときの余裕に関わります。360cm前後が標準です。</p>
+      {% else %}
+      <p class="sunpo__soe">身丈は<strong>背から</strong>測っています。身長と同じくらいが目安です。裄は二センチ足りないと手首が出ます。</p>
+      {% endif %}
 
       <div class="jotai">
         <p class="jotai__mi">状態</p>

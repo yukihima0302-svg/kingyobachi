@@ -1,11 +1,18 @@
 ---
 shinamei: "紅梅 青海波"
+bunrui: "きもの"
 kind: "小紋"
 era: "昭和初期"
 shitake: "145"
 yuki: "60"
 sodetake: ""
 midaba: ""
+nagasa: ""
+haba: ""
+himo: ""
+yokohaba: ""
+takasa: ""
+sozai: ""
 jotai: "袖口に擦れ。小柄な方向き"
 price: ""
 sold: false

@@ -28,7 +28,7 @@ layout: default
       <span class="tanmono__shu">{{ t.kind }}{% if t.era != "" %}　{{ t.era }}{% endif %}</span>
       <span class="tanmono__na">{{ t.shinamei }}</span>
       <span class="tanmono__setsu">{{ t.content | strip_html | strip_newlines | truncate: 46 }}</span>
-      <span class="tanmono__sunpo">身丈 {{ t.shitake }}　裄 {{ t.yuki }}</span>
+      <span class="tanmono__sunpo">{% if t.bunrui == "帯留め" %}紐通し {{ t.himo }}{% elsif t.bunrui == "帯" %}長さ {{ t.nagasa }}　幅 {{ t.haba }}{% else %}身丈 {{ t.shitake }}　裄 {{ t.yuki }}{% endif %}</span>
       <span class="tanmono__jotai">{{ t.jotai }}</span>
       <span class="tanmono__ne">{% if t.price != "" %}{{ t.price }}{% else %}お問い合わせください{% endif %}</span>
     </span>

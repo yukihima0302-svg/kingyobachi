@@ -751,3 +751,11 @@ a:hover { color: var(--raden); text-decoration-color: var(--raden); }
   color: var(--tomoshibi-usu);
   padding-top: 1.2rem; border-top: 1px solid var(--kin-usu);
 }
+
+/* 帯留めは小物。棚を低くして、正方形で見せる */
+.tanmono-dana--komono { height: clamp(240px, 34vw, 320px); }
+.shashin--komono { aspect-ratio: 1 / 1; }
+@media (max-width: 760px) {
+  .tanmono-dana--komono { height: auto; grid-template-columns: repeat(3, 1fr); }
+  .tanmono-dana--komono .tanmono { aspect-ratio: 1 / 1; }
+}
