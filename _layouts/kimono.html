@@ -71,13 +71,13 @@ layout: default
 
       {%- comment -%} 注文口 {%- endcomment -%}
       {% if page.sold %}
-        <p class="chumon__sumi">この一枚はお嫁に行きました。<br>似たものが入りましたら、またご紹介します。</p>
+        <p class="chumon__sumi">この品はお嫁に行きました。<br>似たものが入りましたら、またご紹介します。</p>
       {% elsif page.kounyu_url != "" %}
         <a class="fumi fumi--kai" href="{{ page.kounyu_url }}" rel="noopener">
-          {% if site.shop.shop_name != "" %}{{ site.shop.shop_name }}で買う{% else %}このきものを買う{% endif %}
+          {% if site.shop.shop_name != "" %}{{ site.shop.shop_name }}で買う{% else %}この品を買う{% endif %}
         </a>
       {% else %}
-        <button class="fumi fumi--kai" type="button" data-chumon>このきものを注文する</button>
+        <button class="fumi fumi--kai" type="button" data-chumon>この{% if page.bunrui == "帯留め" %}帯留め{% elsif page.bunrui == "帯" %}帯{% else %}きもの{% endif %}を注文する</button>
       {% endif %}
 
       <p class="shina__toi">
@@ -139,7 +139,7 @@ layout: default
 </div>
 
 <div class="kugiri">
-  <span class="kugiri__ji">ほかの一枚<small>OTHERS</small></span>
+  <span class="kugiri__ji">ほかの品<small>OTHERS</small></span>
 </div>
 
 <div class="tanmono-dana">
@@ -161,5 +161,5 @@ layout: default
 </div>
 
 <p style="text-align:center;margin-top:2.5rem;">
-  <a class="fumi" href="{{ '/gallery/' | relative_url }}">すべてのきものを見る</a>
+  <a class="fumi" href="{{ '/gallery/' | relative_url }}">すべての品を見る</a>
 </p>
