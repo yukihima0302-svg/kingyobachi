@@ -1,0 +1,682 @@
+---
+layout: null
+permalink: /tsukuru/
+sitemap: false
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>商品ファイルをつくる｜金魚鉢</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500&family=Poiret+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --yoru:#131A2C; --yoru-fuka:#0C1120; --hako:#1B2338;
+  --tomoshibi:#E9D9B0; --usu:rgba(233,217,176,.56);
+  --makie:#C9A961; --raden:#A9C6CB; --namida:#C97B84;
+  --kin:rgba(201,169,97,.30); --kin-koi:rgba(201,169,97,.58);
+  --g:"Zen Kaku Gothic New","Hiragino Sans",sans-serif;
+  --m:"Shippori Mincho B1","Hiragino Mincho ProN",serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;padding:clamp(1rem,4vw,3rem) 1rem 5rem;
+  background:var(--yoru);color:var(--tomoshibi);
+  font-family:var(--g);font-size:15px;line-height:1.9;
+  -webkit-font-smoothing:antialiased;
+}
+.waku{max-width:56rem;margin:0 auto}
+h1{
+  font-family:var(--m);font-size:clamp(1.4rem,4vw,1.9rem);
+  letter-spacing:.2em;text-align:center;margin:0 0 .6rem;font-weight:400;
+}
+.soe{text-align:center;color:var(--usu);font-size:.86rem;margin:0 0 2.5rem}
+.soe b{color:var(--raden);font-weight:400}
+
+.ban{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(1rem,3vw,2rem);
+  align-items:start;
+}
+@media(max-width:820px){.ban{grid-template-columns:1fr}}
+
+fieldset{
+  border:1px solid var(--kin);margin:0 0 1.2rem;padding:1.2rem 1.3rem;
+  background:rgba(233,217,176,.03);
+}
+legend{
+  font-size:.74rem;letter-spacing:.24em;color:var(--makie);padding:0 .6em;
+}
+label{display:block;margin-bottom:.9rem}
+label>span{display:block;font-size:.74rem;letter-spacing:.16em;color:var(--makie);margin-bottom:.35em}
+label>span i{font-style:normal;color:var(--usu);letter-spacing:0;font-size:.92em}
+input,textarea,select{
+  width:100%;padding:.65em .8em;
+  background:rgba(12,17,32,.75);border:1px solid var(--kin);
+  color:var(--tomoshibi);font-family:inherit;font-size:.95rem;line-height:1.7;
+  border-radius:0;
+}
+textarea{resize:vertical}
+input:focus,textarea:focus,select:focus{
+  outline:none;border-color:var(--makie);box-shadow:0 0 16px rgba(201,169,97,.16);
+}
+input::placeholder,textarea::placeholder{color:rgba(233,217,176,.26)}
+.futatsu{display:grid;grid-template-columns:1fr 1fr;gap:0 .9rem}
+.mitsu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 .9rem}
+.yoko{display:flex;align-items:center;gap:.6em;margin-bottom:.9rem}
+.yoko input[type=checkbox]{width:auto;margin:0}
+.yoko span{font-size:.88rem;color:var(--tomoshibi);letter-spacing:.08em}
+
+.deki{position:sticky;top:1rem}
+.dashi{
+  white-space:pre-wrap;word-break:break-all;
+  background:rgba(12,17,32,.8);border:1px dashed var(--kin);
+  padding:1.1rem;font-size:.76rem;line-height:1.85;color:var(--usu);
+  max-height:26rem;overflow:auto;margin:0 0 1rem;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+.fname{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.85rem;color:var(--raden);
+  padding:.7em .9em;border:1px solid var(--kin);margin:0 0 1rem;
+  word-break:break-all;
+}
+button{
+  display:block;width:100%;padding:.9em 1.4em;cursor:pointer;
+  background:none;border:1px solid var(--kin-koi);color:var(--tomoshibi);
+  font-family:inherit;font-size:.86rem;letter-spacing:.2em;
+  transition:background-color .3s,color .3s;margin-bottom:.6rem;
+}
+button:hover{background:var(--makie);color:var(--yoru-fuka)}
+.tebiki{
+  margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid var(--kin);
+  font-size:.78rem;line-height:1.95;color:var(--usu);
+}
+.tebiki b{color:var(--makie);font-weight:400}
+.tebiki code{color:var(--raden);font-size:.95em}
+.chui{
+  border-left:2px solid var(--namida);padding-left:.9em;
+  font-size:.78rem;color:var(--usu);margin:.4rem 0 1rem;
+}
+.chui code{color:var(--raden)}
+
+/* 写真の落とし口 */
+.otoshi{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4em;
+  min-height:7.5rem;padding:1.2rem;cursor:pointer;
+  border:1px dashed var(--kin-koi);background:rgba(12,17,32,.5);
+  transition:background-color .25s,border-color .25s;
+}
+.otoshi:hover,.otoshi:focus-visible{background:rgba(201,169,97,.08);border-color:var(--makie);outline:none}
+.otoshi.ue{background:rgba(201,169,97,.16);border-color:var(--makie);border-style:solid}
+.otoshi__ji{font-family:var(--m);font-size:1rem;letter-spacing:.14em;color:var(--tomoshibi)}
+.otoshi__soe{font-size:.74rem;letter-spacing:.1em;color:var(--usu)}
+
+/* 並んだ写真 */
+.tsubu{
+  list-style:none;margin:.9rem 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:.6rem;
+}
+.tsubu:empty{margin:0}
+.tsubu li{position:relative;border:1px solid var(--kin);background:var(--yoru-fuka)}
+.tsubu img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}
+.tsubu__ban{
+  position:absolute;top:0;left:0;
+  font-family:var(--m);font-size:.74rem;letter-spacing:.05em;
+  padding:.15em .55em;background:rgba(12,17,32,.88);color:var(--makie);
+}
+.tsubu__te{
+  display:flex;border-top:1px solid var(--kin);
+}
+.tsubu__te button{
+  flex:1 1 0;margin:0;padding:.3em 0;font-size:.8rem;letter-spacing:0;
+  border:0;border-right:1px solid var(--kin);color:var(--usu);background:none;
+}
+.tsubu__te button:last-child{border-right:0}
+.tsubu__te button:hover{background:var(--makie);color:var(--yoru-fuka)}
+.tsubu__te button:disabled{opacity:.25;cursor:default}
+.tsubu__te button:disabled:hover{background:none;color:var(--usu)}
+.tsubu__na{
+  display:block;padding:.3em .5em;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.62rem;line-height:1.5;color:var(--raden);word-break:break-all;
+  border-top:1px solid var(--kin);
+}
+.shashin__te{margin-top:1rem}
+.shashin__te button{margin-bottom:.5rem}
+</style>
+</head>
+<body>
+<div class="waku">
+
+<h1>商品ファイルをつくる</h1>
+<p class="soe">入れていくと、右に <b>_kimono に置くファイルの中身</b> ができます。<br>コピーして、GitHubで新しいファイルとして貼るだけです。</p>
+
+<div class="ban">
+
+  <div>
+    <fieldset>
+      <legend>どちらですか</legend>
+      <label>
+        <span>分類</span>
+        <select id="bunrui">
+          <option value="きもの">きもの</option>
+          <option value="帯">帯</option>
+          <option value="帯留め">帯留め</option>
+        </select>
+      </label>
+      <label>
+        <span>ファイル名 <i>英数字とハイフン。そのままURLになります</i></span>
+        <input id="slug" placeholder="fuji-yagasuri">
+      </label>
+      <label>
+        <span>品名</span>
+        <input id="shinamei" placeholder="藤色 矢絣">
+      </label>
+      <div class="futatsu">
+        <label>
+          <span>種別</span>
+          <input id="kind" placeholder="銘仙／名古屋帯 など">
+        </label>
+        <label>
+          <span>時代 <i>不明なら空</i></span>
+          <input id="era" placeholder="大正末〜昭和初期">
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>寸法（cm・数字だけ）</legend>
+      <div id="kimonoSunpo">
+        <div class="mitsu">
+          <label><span>身丈</span><input id="shitake" inputmode="numeric" placeholder="148"></label>
+          <label><span>裄</span><input id="yuki" inputmode="numeric" placeholder="62"></label>
+          <label><span>袖丈</span><input id="sodetake" inputmode="numeric" placeholder="49"></label>
+        </div>
+        <label><span>前幅 <i>測っていれば</i></span><input id="midaba" inputmode="numeric" placeholder="24"></label>
+      </div>
+      <div id="obiSunpo" hidden>
+        <div class="futatsu">
+          <label><span>長さ</span><input id="nagasa" inputmode="numeric" placeholder="360"></label>
+          <label><span>幅</span><input id="haba" inputmode="numeric" placeholder="30"></label>
+        </div>
+      </div>
+      <div id="domeSunpo" hidden>
+        <label>
+          <span>紐通し <i>ここがいちばん大事です</i></span>
+          <select id="himo">
+            <option value="三分紐まで">三分紐まで（約1cm）</option>
+            <option value="四分紐まで">四分紐まで（約1.2cm）</option>
+            <option value="三分紐・四分紐とも可">三分紐・四分紐とも可</option>
+            <option value="金具なし（別途お付けできます）">金具なし</option>
+          </select>
+        </label>
+        <div class="futatsu">
+          <label><span>横幅</span><input id="yokohaba" inputmode="decimal" placeholder="4.5"></label>
+          <label><span>高さ</span><input id="takasa" inputmode="decimal" placeholder="2.0"></label>
+        </div>
+        <label>
+          <span>素材 <i>値段の根拠になります</i></span>
+          <input id="sozai" placeholder="七宝／珊瑚／ガラス／べっ甲 など">
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>状態と値段</legend>
+      <label>
+        <span>状態 <i>見つけた傷みをそのまま</i></span>
+        <textarea id="jotai" rows="2" placeholder="衿元に薄いシミが二点。着用時は帯で隠れます"></textarea>
+      </label>
+      <label>
+        <span>値段 <i>数字だけ入れれば「18,000円」の形に整います</i></span>
+        <input id="price" inputmode="numeric" placeholder="18000">
+      </label>
+      <div class="yoko">
+        <input type="checkbox" id="sold">
+        <span>売り切れ</span>
+      </div>
+      <label>
+        <span>メルカリの商品URL <i>入れると「メルカリで買う」ボタンになります</i></span>
+        <input id="kounyu" placeholder="https://jp.mercari.com/item/m00000000000">
+      </label>
+      <p class="chui" id="kounyuSoe">空のままだと、注文フォームが開くボタンになります。</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>写真と説明</legend>
+      <div class="shashinBa">
+        <div class="otoshi" id="otoshi" tabindex="0" role="button"
+             aria-label="写真を選ぶ、またはここにドラッグ">
+          <span class="otoshi__ji">写真をここにドラッグ</span>
+          <span class="otoshi__soe">押してファイルを選ぶこともできます</span>
+          <input type="file" id="erabu" accept="image/*" multiple hidden>
+        </div>
+
+        <ul class="tsubu" id="tsubu"></ul>
+
+        <div class="shashin__te" id="shashinTe" hidden>
+          <button type="button" id="kakidasu">写真を書き出す</button>
+          <p class="chui" id="kakidashiSoe">
+            長辺1600pxに縮めて、名前をつけ直したものが落ちてきます。
+            それを <code>assets/img</code> に上げてください。
+          </p>
+        </div>
+
+        <input id="images" type="hidden">
+        <p class="fname" id="imagesMiru">images: []</p>
+      </div>
+      <p class="chui">写真がまだなら空のままで。文様の柄が代わりに出ます。</p>
+      <div class="futatsu">
+        <label>
+          <span>柄</span>
+          <select id="pattern">
+            <option value="yagasuri">矢絣</option>
+            <option value="kikko">亀甲</option>
+            <option value="seigaiha">青海波</option>
+            <option value="asanoha">麻の葉</option>
+            <option value="ichimatsu">市松</option>
+          </select>
+        </label>
+        <label>
+          <span>柄の色</span>
+          <select id="tone">
+            <option value="fuji">藤</option>
+            <option value="asagi">浅葱</option>
+            <option value="kobai">紅梅</option>
+            <option value="kogane">古金</option>
+          </select>
+        </label>
+      </div>
+      <label>
+        <span>説明 <i>一覧には最初の46文字が出ます</i></span>
+        <textarea id="setsu" rows="4" placeholder="淡い藤に白の矢羽根。銘仙らしい、いちばん素直な一枚。"></textarea>
+      </label>
+      <label>
+        <span>並び順 <i>小さいほど先。新着を1に</i></span>
+        <input id="order" inputmode="numeric" value="1">
+      </label>
+    </fieldset>
+  </div>
+
+  <div class="deki">
+    <p class="fname" id="fname">_kimono/____.md</p>
+    <pre class="dashi" id="dashi"></pre>
+    <button type="button" id="utsusu">中身をコピーする</button>
+    <button type="button" id="tsugi">次の一枚を入れる</button>
+
+    <div class="tebiki">
+      <p><b>貼りかた</b></p>
+      <p>
+        1. コピーする<br>
+        2. <code>github.com/yukihima0302-svg/kingyobachi/new/main/_kimono</code> を開く<br>
+        3. 上の欄に上の<b>ファイル名</b>を入れる<br>
+        4. 本文欄に貼りつけて Commit changes
+      </p>
+      <p><b>写真</b></p>
+      <p>
+        <code>upload/main/assets/img</code> に上げてから、
+        ファイル名をここに書きます。長辺1600pxくらいに縮めておくと軽くなります。
+      </p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+(function(){
+  var id = function(x){ return document.getElementById(x); };
+  var ran = ["bunrui","slug","shinamei","kind","era","shitake","yuki","sodetake",
+             "midaba","nagasa","haba","himo","yokohaba","takasa","sozai",
+             "jotai","price","sold","kounyu","images",
+             "pattern","tone","setsu","order"];
+
+  function q(s){ return String(s||"").replace(/"/g,'”'); }
+
+  function kumu(){
+    var b = id("bunrui").value;
+    var obi = b === "帯", dome = b === "帯留め";
+    id("kimonoSunpo").hidden = obi || dome;
+    id("obiSunpo").hidden = !obi;
+    id("domeSunpo").hidden = !dome;
+
+    var slug = id("slug").value.trim() || "____";
+    id("fname").textContent = "_kimono/" + slug + ".md";
+
+    var ga = id("images").value.split(",").map(function(s){return s.trim();}).filter(Boolean);
+    var gaJi = ga.length ? "[" + ga.map(function(s){return '"'+q(s)+'"';}).join(", ") + "]" : "[]";
+
+    var gyo = [
+      "---",
+      'shinamei: "' + q(id("shinamei").value) + '"',
+      'bunrui: "' + id("bunrui").value + '"',
+      'kind: "' + q(id("kind").value) + '"',
+      'era: "' + q(id("era").value) + '"'
+    ];
+
+    if (dome) {
+      gyo.push('himo: "' + q(id("himo").value) + '"');
+      gyo.push('yokohaba: "' + q(id("yokohaba").value) + '"');
+      gyo.push('takasa: "' + q(id("takasa").value) + '"');
+      gyo.push('sozai: "' + q(id("sozai").value) + '"');
+      gyo.push('shitake: ""', 'yuki: ""', 'sodetake: ""', 'midaba: ""', 'nagasa: ""', 'haba: ""');
+    } else if (obi) {
+      gyo.push('nagasa: "' + q(id("nagasa").value) + '"');
+      gyo.push('haba: "' + q(id("haba").value) + '"');
+      gyo.push('shitake: ""', 'yuki: ""', 'sodetake: ""', 'midaba: ""');
+      gyo.push('himo: ""', 'yokohaba: ""', 'takasa: ""', 'sozai: ""');
+    } else {
+      gyo.push('shitake: "' + q(id("shitake").value) + '"');
+      gyo.push('yuki: "' + q(id("yuki").value) + '"');
+      gyo.push('sodetake: "' + q(id("sodetake").value) + '"');
+      gyo.push('midaba: "' + q(id("midaba").value) + '"');
+      gyo.push('nagasa: ""', 'haba: ""');
+      gyo.push('himo: ""', 'yokohaba: ""', 'takasa: ""', 'sozai: ""');
+    }
+
+    gyo.push(
+      'jotai: "' + q(id("jotai").value.replace(/\n/g," ")) + '"',
+      'price: "' + q(id("price").value) + '"',
+      "sold: " + (id("sold").checked ? "true" : "false"),
+      "images: " + gaJi,
+      'pattern: "' + id("pattern").value + '"',
+      'tone: "' + id("tone").value + '"',
+      'kounyu_url: "' + q(id("kounyu").value) + '"',
+      "order: " + (id("order").value.trim() || "1"),
+      "---",
+      "",
+      id("setsu").value.trim()
+    );
+
+    id("dashi").textContent = gyo.join("\n") + "\n";
+  }
+
+  ran.forEach(function(n){
+    var e = id(n);
+    if (e) { e.addEventListener("input", kumu); e.addEventListener("change", kumu); }
+  });
+
+  id("utsusu").addEventListener("click", function(){
+    var b = id("utsusu"), moto = "中身をコピーする";
+    function owari(j){ b.textContent = j; setTimeout(function(){ b.textContent = moto; }, 2000); }
+    var ji = id("dashi").textContent;
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(ji).then(function(){ owari("うつしました"); })
+        .catch(function(){ owari("うつせませんでした"); });
+    } else {
+      var t = document.createElement("textarea");
+      t.value = ji; t.style.position="fixed"; t.style.opacity="0";
+      document.body.appendChild(t); t.select();
+      try { document.execCommand("copy"); owari("うつしました"); }
+      catch(e){ owari("うつせませんでした"); }
+      document.body.removeChild(t);
+    }
+  });
+
+  id("tsugi").addEventListener("click", function(){
+    ["slug","shinamei","era","shitake","yuki","sodetake","midaba",
+     "nagasa","haba","yokohaba","takasa","sozai",
+     "jotai","price","kounyu","images","setsu"].forEach(function(n){
+      id(n).value = "";
+    });
+    id("sold").checked = false;
+    id("order").value = String((parseInt(id("order").value,10) || 0) + 1);
+    kumu();
+    id("slug").focus();
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+
+  kumu();
+
+  /* ================================================================
+     写真 —— ドラッグで受けて、名前をつけ直し、縮めて書き出す
+     ================================================================ */
+
+  var otoshi  = id("otoshi");
+  var erabu   = id("erabu");
+  var tsubuRan= id("tsubu");
+  var teRan   = id("shashinTe");
+  var kakidasu= id("kakidasu");
+  var miru    = id("imagesMiru");
+
+  var mai = [];          // {file, url}
+  var NAGAHEN = 1600;    // 長辺の上限
+  var SHITSU  = 0.85;    // JPEGの質
+
+  function shiri(){
+    var s = id("slug").value.trim();
+    return s ? s : "shashin";
+  }
+
+  function nazuke(i){ return shiri() + "-" + (i + 1) + ".jpg"; }
+
+  function kakinaosuShashin(){
+    tsubuRan.innerHTML = "";
+
+    mai.forEach(function(m, i){
+      var li = document.createElement("li");
+
+      var img = document.createElement("img");
+      img.src = m.url;
+      img.alt = "";
+      li.appendChild(img);
+
+      var ban = document.createElement("span");
+      ban.className = "tsubu__ban";
+      ban.textContent = i + 1;
+      li.appendChild(ban);
+
+      var te = document.createElement("div");
+      te.className = "tsubu__te";
+
+      var hidari = document.createElement("button");
+      hidari.type = "button"; hidari.textContent = "←";
+      hidari.title = "前へ"; hidari.disabled = (i === 0);
+      hidari.addEventListener("click", function(){ ireKae(i, i - 1); });
+
+      var migi = document.createElement("button");
+      migi.type = "button"; migi.textContent = "→";
+      migi.title = "後ろへ"; migi.disabled = (i === mai.length - 1);
+      migi.addEventListener("click", function(){ ireKae(i, i + 1); });
+
+      var kesu = document.createElement("button");
+      kesu.type = "button"; kesu.textContent = "×";
+      kesu.title = "はずす";
+      kesu.addEventListener("click", function(){
+        URL.revokeObjectURL(mai[i].url);
+        mai.splice(i, 1);
+        kakinaosuShashin();
+      });
+
+      te.appendChild(hidari); te.appendChild(migi); te.appendChild(kesu);
+      li.appendChild(te);
+
+      var na = document.createElement("span");
+      na.className = "tsubu__na";
+      na.textContent = nazuke(i);
+      li.appendChild(na);
+
+      tsubuRan.appendChild(li);
+    });
+
+    teRan.hidden = (mai.length === 0);
+
+    var namae = mai.map(function(_, i){ return nazuke(i); });
+    id("images").value = namae.join(", ");
+    miru.textContent = namae.length
+      ? "images: [" + namae.map(function(n){ return '"' + n + '"'; }).join(", ") + "]"
+      : "images: []";
+
+    kumu();
+  }
+
+  function ireKae(kara, e){
+    if (e < 0 || e >= mai.length) return;
+    var x = mai[kara]; mai[kara] = mai[e]; mai[e] = x;
+    kakinaosuShashin();
+  }
+
+  function ukeru(files){
+    Array.prototype.forEach.call(files, function(f){
+      if (!f.type || f.type.indexOf("image/") !== 0) return;
+      mai.push({ file: f, url: URL.createObjectURL(f) });
+    });
+    kakinaosuShashin();
+  }
+
+  otoshi.addEventListener("click", function(){ erabu.click(); });
+  otoshi.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); erabu.click(); }
+  });
+  erabu.addEventListener("change", function(){ ukeru(erabu.files); erabu.value = ""; });
+
+  ["dragenter","dragover"].forEach(function(n){
+    otoshi.addEventListener(n, function(e){
+      e.preventDefault(); e.stopPropagation(); otoshi.classList.add("ue");
+    });
+  });
+  ["dragleave","drop"].forEach(function(n){
+    otoshi.addEventListener(n, function(e){
+      e.preventDefault(); e.stopPropagation(); otoshi.classList.remove("ue");
+    });
+  });
+  otoshi.addEventListener("drop", function(e){
+    if (e.dataTransfer && e.dataTransfer.files) ukeru(e.dataTransfer.files);
+  });
+
+  // ページ外へこぼしたときにブラウザが画像を開いてしまうのを止める
+  ["dragover","drop"].forEach(function(n){
+    window.addEventListener(n, function(e){ e.preventDefault(); });
+  });
+
+  // ファイル名が slug に追随する
+  id("slug").addEventListener("input", function(){
+    if (mai.length) kakinaosuShashin();
+  });
+
+  /* ---- 縮めて書き出す ---------------------------------------- */
+
+  function chijimeru(file){
+    return new Promise(function(kanryo, shippai){
+      var img = new Image();
+      var url = URL.createObjectURL(file);
+      img.onload = function(){
+        var w = img.naturalWidth, h = img.naturalHeight;
+        var hi = Math.min(1, NAGAHEN / Math.max(w, h));
+        var nw = Math.round(w * hi), nh = Math.round(h * hi);
+
+        var c = document.createElement("canvas");
+        c.width = nw; c.height = nh;
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, nw, nh);
+        ctx.drawImage(img, 0, 0, nw, nh);
+
+        c.toBlob(function(blob){
+          URL.revokeObjectURL(url);
+          blob ? kanryo(blob) : shippai(new Error("変換できませんでした"));
+        }, "image/jpeg", SHITSU);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); shippai(new Error("読めませんでした")); };
+      img.src = url;
+    });
+  }
+
+  function otosu(blob, na){
+    var u = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = u; a.download = na;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(u); }, 4000);
+  }
+
+  kakidasu.addEventListener("click", function(){
+    if (!mai.length) return;
+    if (!id("slug").value.trim()) {
+      id("kakidashiSoe").textContent = "先に上のファイル名を決めてください。写真の名前がそこから作られます。";
+      id("slug").focus();
+      return;
+    }
+
+    var moto = kakidasu.textContent;
+    kakidasu.disabled = true;
+    kakidasu.textContent = "縮めています…";
+
+    var i = 0;
+    function tsugi(){
+      if (i >= mai.length) {
+        kakidasu.disabled = false;
+        kakidasu.textContent = moto;
+        id("kakidashiSoe").textContent =
+          mai.length + "枚を書き出しました。assets/img に上げてください。";
+        return;
+      }
+      var na = nazuke(i);
+      chijimeru(mai[i].file).then(function(blob){
+        otosu(blob, na);
+        i++;
+        setTimeout(tsugi, 350);   // まとめて落とすとブラウザが詰まるので間を置く
+      }).catch(function(){
+        id("kakidashiSoe").textContent = na + " を書き出せませんでした。飛ばします。";
+        i++;
+        setTimeout(tsugi, 350);
+      });
+    }
+    tsugi();
+  });
+
+  // 「次の一枚」で写真も片付ける
+  id("tsugi").addEventListener("click", function(){
+    mai.forEach(function(m){ URL.revokeObjectURL(m.url); });
+    mai = [];
+    kakinaosuShashin();
+    id("kakidashiSoe").textContent =
+      "長辺1600pxに縮めて、名前をつけ直したものが落ちてきます。それを assets/img に上げてください。";
+  });
+
+  /* ---- 値段を整える ------------------------------------------
+     全角で打っても、カンマや「円」を忘れても、同じ形に揃える。
+     「お問い合わせください」のような文字はそのまま残す。 */
+  (function(){
+    var ran = id("price");
+
+    function hankaku(s){
+      return s.replace(/[０-９]/g, function(c){
+        return String.fromCharCode(c.charCodeAt(0) - 0xFEE0);
+      }).replace(/[，、]/g, ",");
+    }
+
+    ran.addEventListener("blur", function(){
+      var s = hankaku(ran.value.trim());
+      if (s === "") return;
+      var suji = s.replace(/[,\s円]/g, "");
+      if (/^\d+$/.test(suji)) {
+        ran.value = Number(suji).toLocaleString("ja-JP") + "円";
+        kumu();
+      }
+    });
+  })();
+
+  /* ---- 購入URLの有無で説明を変える ---------------------------- */
+  (function(){
+    var ran = id("kounyu"), soe = id("kounyuSoe");
+    function utsuru(){
+      soe.textContent = ran.value.trim()
+        ? "「メルカリで買う」ボタンになり、そのURLへ飛びます。"
+        : "空のままだと、注文フォームが開くボタンになります。";
+    }
+    ran.addEventListener("input", utsuru);
+    utsuru();
+  })();
+
+  kakinaosuShashin();
+})();
+</script>
+</body>
+</html>

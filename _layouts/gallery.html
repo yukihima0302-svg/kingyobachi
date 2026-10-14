@@ -1,0 +1,76 @@
+---
+layout: page
+title: 品もの一覧
+latin: ITEMS
+permalink: /gallery/
+lead: すべて一点物です。触れると広がって、寸法と状態が出ます。まずはその数字を、お手持ちのものと見比べてみてください。
+---
+
+{% assign shina = site.kimono | sort: "order" %}
+{% assign aru = shina | where: "sold", false %}
+{% assign sumi = shina | where: "sold", true %}
+
+{% assign kumi = "きもの,帯,帯留め" | split: "," %}
+{% assign latin = "KIMONO,OBI,OBIDOME" | split: "," %}
+
+{% for k in kumi %}
+  {% assign ko = aru | where: "bunrui", k %}
+  {% if ko.size > 0 %}
+  <div class="kugiri">
+    <span class="kugiri__ji">{{ k }}<small>{{ latin[forloop.index0] }}</small></span>
+  </div>
+
+  <div class="tanmono-dana{% if k == '帯留め' %} tanmono-dana--komono{% endif %}">
+    {% for t in ko %}
+    <a class="tanmono" href="{{ t.url | relative_url }}">
+      {% if t.images.size > 0 %}
+        <img src="{{ '/assets/img/' | append: t.images.first | relative_url }}" alt="{{ t.shinamei }}">
+      {% else %}
+        <span class="tanmono__gara gara--{{ t.pattern }} iro--{{ t.tone }}" aria-hidden="true"></span>
+      {% endif %}
+      <span class="tanmono__fuda">
+        <span class="tanmono__shu">{{ t.kind }}{% if t.era != "" %}　{{ t.era }}{% endif %}</span>
+        <span class="tanmono__na">{{ t.shinamei }}</span>
+        <span class="tanmono__setsu">{{ t.content | strip_html | strip_newlines | truncate: 46 }}</span>
+        <span class="tanmono__sunpo">{% if t.bunrui == "帯留め" %}紐通し {{ t.himo }}{% elsif t.bunrui == "帯" %}長さ {{ t.nagasa }}　幅 {{ t.haba }}{% else %}身丈 {{ t.shitake }}　裄 {{ t.yuki }}{% endif %}</span>
+        <span class="tanmono__jotai">{{ t.jotai }}</span>
+        <span class="tanmono__ne">{% if t.price != "" %}{{ t.price }}{% else %}お問い合わせください{% endif %}</span>
+      </span>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+{% endfor %}
+
+{% if sumi.size > 0 %}
+<div class="kugiri">
+  <span class="kugiri__ji">お嫁に行った品<small>SOLD</small></span>
+</div>
+
+<p class="maegaki" style="margin-bottom:2rem;">こういうものを扱っています、というご参考に。同じものは二度と入りませんが、似たものが入ることはあります。</p>
+
+<ul class="sumi-dana">
+  {% for t in sumi %}
+  <li>
+    <a href="{{ t.url | relative_url }}">
+      <span class="sumi-dana__na">{{ t.shinamei }}</span>
+      <span class="sumi-dana__shu">{{ t.kind }}</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<div class="kugiri">
+  <span class="kugiri__ji">お求めについて<small>NOTES</small></span>
+</div>
+
+<div class="maegaki">
+  <p>一点しかないものばかりなので、売れたら終わりです。気になるものはお取り置きしますので、お知らせください。</p>
+  <p>状態の欄には、見つけた傷みをそのまま書いています。古いものですので、書ききれない小さな汚れやヤケがある場合もあります。気になる箇所は、お申しつけいただければ写真をお送りします。買う前に見ていただくほうが、お互いのためです。</p>
+</div>
+
+<div class="izanai">
+  <p>気になる一点があれば、お取り置きします。<br>寸法のご相談も、追加の写真も、お電話でどうぞ。</p>
+  <a class="fumi" href="tel:{{ site.shop.tel | replace: '-', '' }}">{{ site.shop.tel }}</a>
+</div>
