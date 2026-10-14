@@ -101,6 +101,52 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
   border-left:2px solid var(--namida);padding-left:.9em;
   font-size:.78rem;color:var(--usu);margin:.4rem 0 1rem;
 }
+.chui code{color:var(--raden)}
+
+/* 写真の落とし口 */
+.otoshi{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4em;
+  min-height:7.5rem;padding:1.2rem;cursor:pointer;
+  border:1px dashed var(--kin-koi);background:rgba(12,17,32,.5);
+  transition:background-color .25s,border-color .25s;
+}
+.otoshi:hover,.otoshi:focus-visible{background:rgba(201,169,97,.08);border-color:var(--makie);outline:none}
+.otoshi.ue{background:rgba(201,169,97,.16);border-color:var(--makie);border-style:solid}
+.otoshi__ji{font-family:var(--m);font-size:1rem;letter-spacing:.14em;color:var(--tomoshibi)}
+.otoshi__soe{font-size:.74rem;letter-spacing:.1em;color:var(--usu)}
+
+/* 並んだ写真 */
+.tsubu{
+  list-style:none;margin:.9rem 0 0;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:.6rem;
+}
+.tsubu:empty{margin:0}
+.tsubu li{position:relative;border:1px solid var(--kin);background:var(--yoru-fuka)}
+.tsubu img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}
+.tsubu__ban{
+  position:absolute;top:0;left:0;
+  font-family:var(--m);font-size:.74rem;letter-spacing:.05em;
+  padding:.15em .55em;background:rgba(12,17,32,.88);color:var(--makie);
+}
+.tsubu__te{
+  display:flex;border-top:1px solid var(--kin);
+}
+.tsubu__te button{
+  flex:1 1 0;margin:0;padding:.3em 0;font-size:.8rem;letter-spacing:0;
+  border:0;border-right:1px solid var(--kin);color:var(--usu);background:none;
+}
+.tsubu__te button:last-child{border-right:0}
+.tsubu__te button:hover{background:var(--makie);color:var(--yoru-fuka)}
+.tsubu__te button:disabled{opacity:.25;cursor:default}
+.tsubu__te button:disabled:hover{background:none;color:var(--usu)}
+.tsubu__na{
+  display:block;padding:.3em .5em;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.62rem;line-height:1.5;color:var(--raden);word-break:break-all;
+  border-top:1px solid var(--kin);
+}
+.shashin__te{margin-top:1rem}
+.shashin__te button{margin-bottom:.5rem}
 </style>
 </head>
 <body>
@@ -201,10 +247,27 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
 
     <fieldset>
       <legend>写真と説明</legend>
-      <label>
-        <span>写真のファイル名 <i>カンマ区切り。assets/img に入れたもの</i></span>
-        <input id="images" placeholder="fuji-1.jpg, fuji-2.jpg, fuji-3.jpg">
-      </label>
+      <div class="shashinBa">
+        <div class="otoshi" id="otoshi" tabindex="0" role="button"
+             aria-label="写真を選ぶ、またはここにドラッグ">
+          <span class="otoshi__ji">写真をここにドラッグ</span>
+          <span class="otoshi__soe">押してファイルを選ぶこともできます</span>
+          <input type="file" id="erabu" accept="image/*" multiple hidden>
+        </div>
+
+        <ul class="tsubu" id="tsubu"></ul>
+
+        <div class="shashin__te" id="shashinTe" hidden>
+          <button type="button" id="kakidasu">写真を書き出す</button>
+          <p class="chui" id="kakidashiSoe">
+            長辺1600pxに縮めて、名前をつけ直したものが落ちてきます。
+            それを <code>assets/img</code> に上げてください。
+          </p>
+        </div>
+
+        <input id="images" type="hidden">
+        <p class="fname" id="imagesMiru">images: []</p>
+      </div>
       <p class="chui">写真がまだなら空のままで。文様の柄が代わりに出ます。</p>
       <div class="futatsu">
         <label>
@@ -367,6 +430,216 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
   });
 
   kumu();
+
+  /* ================================================================
+     写真 —— ドラッグで受けて、名前をつけ直し、縮めて書き出す
+     ================================================================ */
+
+  var otoshi  = id("otoshi");
+  var erabu   = id("erabu");
+  var tsubuRan= id("tsubu");
+  var teRan   = id("shashinTe");
+  var kakidasu= id("kakidasu");
+  var miru    = id("imagesMiru");
+
+  var mai = [];          // {file, url}
+  var NAGAHEN = 1600;    // 長辺の上限
+  var SHITSU  = 0.85;    // JPEGの質
+
+  function shiri(){
+    var s = id("slug").value.trim();
+    return s ? s : "shashin";
+  }
+
+  function nazuke(i){ return shiri() + "-" + (i + 1) + ".jpg"; }
+
+  function kakinaosuShashin(){
+    tsubuRan.innerHTML = "";
+
+    mai.forEach(function(m, i){
+      var li = document.createElement("li");
+
+      var img = document.createElement("img");
+      img.src = m.url;
+      img.alt = "";
+      li.appendChild(img);
+
+      var ban = document.createElement("span");
+      ban.className = "tsubu__ban";
+      ban.textContent = i + 1;
+      li.appendChild(ban);
+
+      var te = document.createElement("div");
+      te.className = "tsubu__te";
+
+      var hidari = document.createElement("button");
+      hidari.type = "button"; hidari.textContent = "←";
+      hidari.title = "前へ"; hidari.disabled = (i === 0);
+      hidari.addEventListener("click", function(){ ireKae(i, i - 1); });
+
+      var migi = document.createElement("button");
+      migi.type = "button"; migi.textContent = "→";
+      migi.title = "後ろへ"; migi.disabled = (i === mai.length - 1);
+      migi.addEventListener("click", function(){ ireKae(i, i + 1); });
+
+      var kesu = document.createElement("button");
+      kesu.type = "button"; kesu.textContent = "×";
+      kesu.title = "はずす";
+      kesu.addEventListener("click", function(){
+        URL.revokeObjectURL(mai[i].url);
+        mai.splice(i, 1);
+        kakinaosuShashin();
+      });
+
+      te.appendChild(hidari); te.appendChild(migi); te.appendChild(kesu);
+      li.appendChild(te);
+
+      var na = document.createElement("span");
+      na.className = "tsubu__na";
+      na.textContent = nazuke(i);
+      li.appendChild(na);
+
+      tsubuRan.appendChild(li);
+    });
+
+    teRan.hidden = (mai.length === 0);
+
+    var namae = mai.map(function(_, i){ return nazuke(i); });
+    id("images").value = namae.join(", ");
+    miru.textContent = namae.length
+      ? "images: [" + namae.map(function(n){ return '"' + n + '"'; }).join(", ") + "]"
+      : "images: []";
+
+    kumu();
+  }
+
+  function ireKae(kara, e){
+    if (e < 0 || e >= mai.length) return;
+    var x = mai[kara]; mai[kara] = mai[e]; mai[e] = x;
+    kakinaosuShashin();
+  }
+
+  function ukeru(files){
+    Array.prototype.forEach.call(files, function(f){
+      if (!f.type || f.type.indexOf("image/") !== 0) return;
+      mai.push({ file: f, url: URL.createObjectURL(f) });
+    });
+    kakinaosuShashin();
+  }
+
+  otoshi.addEventListener("click", function(){ erabu.click(); });
+  otoshi.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); erabu.click(); }
+  });
+  erabu.addEventListener("change", function(){ ukeru(erabu.files); erabu.value = ""; });
+
+  ["dragenter","dragover"].forEach(function(n){
+    otoshi.addEventListener(n, function(e){
+      e.preventDefault(); e.stopPropagation(); otoshi.classList.add("ue");
+    });
+  });
+  ["dragleave","drop"].forEach(function(n){
+    otoshi.addEventListener(n, function(e){
+      e.preventDefault(); e.stopPropagation(); otoshi.classList.remove("ue");
+    });
+  });
+  otoshi.addEventListener("drop", function(e){
+    if (e.dataTransfer && e.dataTransfer.files) ukeru(e.dataTransfer.files);
+  });
+
+  // ページ外へこぼしたときにブラウザが画像を開いてしまうのを止める
+  ["dragover","drop"].forEach(function(n){
+    window.addEventListener(n, function(e){ e.preventDefault(); });
+  });
+
+  // ファイル名が slug に追随する
+  id("slug").addEventListener("input", function(){
+    if (mai.length) kakinaosuShashin();
+  });
+
+  /* ---- 縮めて書き出す ---------------------------------------- */
+
+  function chijimeru(file){
+    return new Promise(function(kanryo, shippai){
+      var img = new Image();
+      var url = URL.createObjectURL(file);
+      img.onload = function(){
+        var w = img.naturalWidth, h = img.naturalHeight;
+        var hi = Math.min(1, NAGAHEN / Math.max(w, h));
+        var nw = Math.round(w * hi), nh = Math.round(h * hi);
+
+        var c = document.createElement("canvas");
+        c.width = nw; c.height = nh;
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, nw, nh);
+        ctx.drawImage(img, 0, 0, nw, nh);
+
+        c.toBlob(function(blob){
+          URL.revokeObjectURL(url);
+          blob ? kanryo(blob) : shippai(new Error("変換できませんでした"));
+        }, "image/jpeg", SHITSU);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); shippai(new Error("読めませんでした")); };
+      img.src = url;
+    });
+  }
+
+  function otosu(blob, na){
+    var u = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = u; a.download = na;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(u); }, 4000);
+  }
+
+  kakidasu.addEventListener("click", function(){
+    if (!mai.length) return;
+    if (!id("slug").value.trim()) {
+      id("kakidashiSoe").textContent = "先に上のファイル名を決めてください。写真の名前がそこから作られます。";
+      id("slug").focus();
+      return;
+    }
+
+    var moto = kakidasu.textContent;
+    kakidasu.disabled = true;
+    kakidasu.textContent = "縮めています…";
+
+    var i = 0;
+    function tsugi(){
+      if (i >= mai.length) {
+        kakidasu.disabled = false;
+        kakidasu.textContent = moto;
+        id("kakidashiSoe").textContent =
+          mai.length + "枚を書き出しました。assets/img に上げてください。";
+        return;
+      }
+      var na = nazuke(i);
+      chijimeru(mai[i].file).then(function(blob){
+        otosu(blob, na);
+        i++;
+        setTimeout(tsugi, 350);   // まとめて落とすとブラウザが詰まるので間を置く
+      }).catch(function(){
+        id("kakidashiSoe").textContent = na + " を書き出せませんでした。飛ばします。";
+        i++;
+        setTimeout(tsugi, 350);
+      });
+    }
+    tsugi();
+  });
+
+  // 「次の一枚」で写真も片付ける
+  id("tsugi").addEventListener("click", function(){
+    mai.forEach(function(m){ URL.revokeObjectURL(m.url); });
+    mai = [];
+    kakinaosuShashin();
+    id("kakidashiSoe").textContent =
+      "長辺1600pxに縮めて、名前をつけ直したものが落ちてきます。それを assets/img に上げてください。";
+  });
+
+  kakinaosuShashin();
 })();
 </script>
 </body>
