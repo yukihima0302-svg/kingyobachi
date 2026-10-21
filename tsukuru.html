@@ -337,6 +337,20 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
 
   function q(s){ return String(s||"").replace(/"/g,'”'); }
 
+  /* 値段を同じ形に揃える。
+     全角、カンマの打ち間違い、「円」の有無を吸収して「22,000円」にする。
+     数字でないもの（「お問い合わせください」など）はそのまま通す。 */
+  function seiru(s){
+    s = String(s || "").trim();
+    if (s === "") return "";
+    var h = s.replace(/[０-９]/g, function(c){
+      return String.fromCharCode(c.charCodeAt(0) - 0xFEE0);
+    });
+    var suji = h.replace(/[,，、\s円]/g, "");
+    if (!/^\d+$/.test(suji)) return s;
+    return Number(suji).toLocaleString("ja-JP") + "円";
+  }
+
   function kumu(){
     var b = id("bunrui").value;
     var obi = b === "帯", dome = b === "帯留め";
@@ -380,7 +394,7 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
 
     gyo.push(
       'jotai: "' + q(id("jotai").value.replace(/\n/g," ")) + '"',
-      'price: "' + q(id("price").value) + '"',
+      'price: "' + q(seiru(id("price").value)) + '"',
       "sold: " + (id("sold").checked ? "true" : "false"),
       "images: " + gaJi,
       'pattern: "' + id("pattern").value + '"',
@@ -646,20 +660,10 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
   (function(){
     var ran = id("price");
 
-    function hankaku(s){
-      return s.replace(/[０-９]/g, function(c){
-        return String.fromCharCode(c.charCodeAt(0) - 0xFEE0);
-      }).replace(/[，、]/g, ",");
-    }
-
     ran.addEventListener("blur", function(){
-      var s = hankaku(ran.value.trim());
-      if (s === "") return;
-      var suji = s.replace(/[,\s円]/g, "");
-      if (/^\d+$/.test(suji)) {
-        ran.value = Number(suji).toLocaleString("ja-JP") + "円";
-        kumu();
-      }
+      var naoshi = seiru(ran.value);
+      if (naoshi !== ran.value) { ran.value = naoshi; }
+      kumu();
     });
   })();
 
