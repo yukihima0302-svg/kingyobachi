@@ -69,6 +69,14 @@ layout: default
         <p class="jotai__ji">{{ page.jotai }}</p>
       </div>
 
+      {%- comment -%} 撮影で袖を通したものだけ、その旨を出す {%- endcomment -%}
+      {% if page.chakuyo %}
+      <p class="sunpo__soe">
+        撮影のため、私が数時間だけ袖を通しています。下には襦袢を着ています。
+        陰干しとアイロンがけをしてからお送りします。
+      </p>
+      {% endif %}
+
       {%- comment -%} 注文口 {%- endcomment -%}
       {% if page.sold %}
         <p class="chumon__sumi">この品はお嫁に行きました。<br>似たものが入りましたら、またご紹介します。</p>

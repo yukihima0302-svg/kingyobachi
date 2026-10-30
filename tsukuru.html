@@ -239,6 +239,11 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
         <input type="checkbox" id="sold">
         <span>売り切れ</span>
       </div>
+      <div class="yoko">
+        <input type="checkbox" id="chakuyo">
+        <span>撮影で袖を通した</span>
+      </div>
+      <p class="chui">入れた品だけ、商品ページに「数時間袖を通した／襦袢を着ている／陰干しとアイロン」の一文が出ます。入れなければ何も出ません。</p>
       <label>
         <span>メルカリの商品URL <i>入れると「メルカリで買う」ボタンになります</i></span>
         <input id="kounyu" placeholder="https://jp.mercari.com/item/m00000000000">
@@ -332,7 +337,7 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
   var id = function(x){ return document.getElementById(x); };
   var ran = ["bunrui","slug","shinamei","kind","era","shitake","yuki","sodetake",
              "midaba","nagasa","haba","himo","yokohaba","takasa","sozai",
-             "jotai","price","sold","kounyu","images",
+             "jotai","price","sold","chakuyo","kounyu","images",
              "pattern","tone","setsu","order"];
 
   function q(s){ return String(s||"").replace(/"/g,'”'); }
@@ -396,6 +401,7 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
       'jotai: "' + q(id("jotai").value.replace(/\n/g," ")) + '"',
       'price: "' + q(seiru(id("price").value)) + '"',
       "sold: " + (id("sold").checked ? "true" : "false"),
+      "chakuyo: " + (id("chakuyo").checked ? "true" : "false"),
       "images: " + gaJi,
       'pattern: "' + id("pattern").value + '"',
       'tone: "' + id("tone").value + '"',
@@ -438,6 +444,7 @@ button:hover{background:var(--makie);color:var(--yoru-fuka)}
       id(n).value = "";
     });
     id("sold").checked = false;
+    id("chakuyo").checked = false;
     id("order").value = String((parseInt(id("order").value,10) || 0) + 1);
     kumu();
     id("slug").focus();
